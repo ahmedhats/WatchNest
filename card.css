@@ -1,0 +1,110 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background-position: right right;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+#card {
+    display: flex;
+    justify-content: left;
+    /* align-items: center;     */
+    gap: 2vw;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 90%;
+}
+
+#card img {
+    align-self: center;
+}
+
+img {
+    border-radius: 30px;
+    border: solid rgb(100, 0, 97);
+    height: 35vw;
+    transition: color 0.5s ease, box-shadow 0.5s ease;
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+}
+
+img:hover {
+    border: dashed rgb(255, 255, 255);
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
+}
+
+
+
+p {
+
+    width: 50vw;
+    height: fit-content;
+}
+
+p:hover {
+    font-size: 1.3vw;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+nav {
+    height: 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #032541;
+    font-size: 1.5vw;
+}
+
+ul a {
+    text-decoration: none;
+    color: white;
+
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+}
+
+ul a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background: #3498db;
+    transition: width 0.3s ease;
+}
+
+ul a:hover::after {
+    width: 100%;
+    /* Fills the underline */
+}
+
+ul {
+    display: flex;
+    padding: 0;
+    gap: 2vw;
+    list-style: none;
+    justify-content: space-evenly;
+    color: white;
+}
