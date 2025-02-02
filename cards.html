@@ -7,16 +7,20 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
     />
-    <title>Movies</title>
+    <title>WatchNest</title>
     <link rel="stylesheet" href="cards.css" />
   </head>
   <body>
     <nav>
       <ul id="left-nav">
-        <li><a href="#">ahmedhat</a></li>
-        <li onclick="clicked(1)">Movies</li>
-        <li onclick="clicked(2)">TV Shows</li>
-        <li onclick="clicked(3)">People</li>
+        <li><a href="#">Home</a></li>
+        <li onclick="click('movie', 'poster_path', 'title', 'release_date')">
+          Movies
+        </li>
+        <li onclick="click('tv','poster_path','name','first_air_date')">
+          TV Shows
+        </li>
+        <li onclick="click('person','profile_path','name','date')">People</li>
         <li><a href="#">More</a></li>
         <!-- add anchor tags if a problem aries -->
       </ul>
