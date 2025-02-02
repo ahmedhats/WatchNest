@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <title>WatchNest</title>
+    <link rel="stylesheet" href="../CSS/style.css" />
+  </head>
+  <body>
+    <nav>
+      <ul id="left-nav">
+        <li><a href="../HTML/index.html">Home</a></li>
+        <li>
+          <a href="../HTML/cards.html?type=movies">Movies</a>
+          <ul class="dropdown">
+            <li><a href="#">Popular</a></li>
+            <li><a href="#">Top Rated</a></li>
+            <li><a href="#">Favorites</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="../HTML/cards.html?type=tvs">TV Shows</a>
+          <ul class="dropdown">
+            <li><a href="#">Popular</a></li>
+            <li><a href="#">Top Rated</a></li>
+            <li><a href="#">Favorites</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="../HTML/cards.html?type=persons">Persons</a>
+          <ul class="dropdown">
+            <li><a href="#">Most Known</a></li>
+            <li><a href="#">Trending</a></li>
+          </ul>
+        </li>
+        <li><a href="#">More</a></li>
+        <!-- it was onclick event listener but it wasn't working properly also anchor tags make the return button work well -->
+      </ul>
+      <ul id="right-nav">
+        <li>
+          <a href="#"><i class="fas fa-plus"></i></a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-globe"></i></a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-bell"></i></a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-user-circle"></i></a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-search"></i></a>
+        </li>
+      </ul>
+    </nav>
+  </body>
+  <script src="../JS/script.js"></script>
+</html>

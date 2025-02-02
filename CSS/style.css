@@ -1,0 +1,149 @@
+body {
+    margin: 0;
+    background-color: #010a19;
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+}
+
+a:hover {
+    color: #3498db;
+}
+
+nav {
+    height: 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(3, 37, 65, 0.8);
+    /* Semi-transparent glass */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(3, 37, 65, 0.7);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(3, 37, 65, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(3, 37, 65, 0.7);
+    list-style: none;
+    padding: 0;
+    min-width: 150px;
+    display: none;
+    /* Hidden by default */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown li {
+    padding: 10px;
+    text-align: left;
+}
+
+.dropdown li a {
+    color: white;
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.dropdown li a:hover {
+    background: #3498db;
+    border-radius: 5px;
+}
+
+#left-nav {
+    padding-left: 2vw;
+    position: relative;
+}
+
+#left-nav li:hover .dropdown {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#right-nav {
+    padding-right: 2vw;
+}
+
+ul {
+    display: flex;
+    padding: 0;
+    gap: 2vw;
+    list-style: none;
+    justify-content: space-evenly;
+    color: white;
+}
+
+ul li {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: transform 0.4s ease, 0.3s ease-in-out;
+    font-size: 1.5rem;
+}
+
+/* 
+ul li:hover {
+    transform: scale(1.1);
+   
+} */
+
+ul li::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+    width: 0;
+    height: 3px;
+    background: #3498db;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+ul li:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+img,
+p,
+ul li {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    nav {
+        font-size: 4vw;
+        height: 10vw;
+    }
+
+    ul li {
+        font-size: 1rem;
+    }
+}

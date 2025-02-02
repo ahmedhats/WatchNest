@@ -8,15 +8,35 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
     />
     <title>WatchNest</title>
-    <link rel="stylesheet" href="cards.css" />
+    <link rel="stylesheet" href="../CSS/cards.css" />
   </head>
   <body>
     <nav>
       <ul id="left-nav">
-        <li><a href="#">Home</a></li>
-        <li><a href="cards.html?type=movies">Movies</a></li>
-        <li><a href="cards.html?type=tvs">TV Shows</a></li>
-        <li><a href="cards.html?type=persons">Persons</a></li>
+        <li><a href="../HTML/index.html">Home</a></li>
+        <li>
+          <a href="../HTML/cards.html?type=movies">Movies</a>
+          <ul class="dropdown">
+            <li><a href="#">Popular</a></li>
+            <li><a href="#">Top Rated</a></li>
+            <li><a href="#">Favorites</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="../HTML/cards.html?type=tvs">TV Shows</a>
+          <ul class="dropdown">
+            <li><a href="#">Popular</a></li>
+            <li><a href="#">Top Rated</a></li>
+            <li><a href="#">Favorites</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="../HTML/cards.html?type=persons">Persons</a>
+          <ul class="dropdown">
+            <li><a href="#">Most Known</a></li>
+            <li><a href="#">Trending</a></li>
+          </ul>
+        </li>
         <li><a href="#">More</a></li>
         <!-- it was onclick event listener but it wasn't working properly also anchor tags make the return button work well -->
       </ul>
@@ -40,5 +60,5 @@
     </nav>
     <div id="cards"></div>
   </body>
-  <script src="cards.js"></script>
+  <script src="../JS/cards.js"></script>
 </html>
