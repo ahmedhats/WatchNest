@@ -14,15 +14,11 @@
     <nav>
       <ul id="left-nav">
         <li><a href="#">Home</a></li>
-        <li onclick="click('movie', 'poster_path', 'title', 'release_date')">
-          Movies
-        </li>
-        <li onclick="click('tv','poster_path','name','first_air_date')">
-          TV Shows
-        </li>
-        <li onclick="click('person','profile_path','name','date')">People</li>
+        <li><a href="cards.html?type=movies">Movies</a></li>
+        <li><a href="cards.html?type=tvs">TV Shows</a></li>
+        <li><a href="cards.html?type=persons">Persons</a></li>
         <li><a href="#">More</a></li>
-        <!-- add anchor tags if a problem aries -->
+        <!-- it was onclick event listener but it wasn't working properly also anchor tags make the return button work well -->
       </ul>
       <ul id="right-nav">
         <li>
@@ -43,6 +39,6 @@
       </ul>
     </nav>
     <div id="cards"></div>
-    <script src="cards.js"></script>
   </body>
+  <script src="cards.js"></script>
 </html>

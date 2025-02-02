@@ -3,7 +3,7 @@ const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZDUzZTM3YjA0N2EzMGE4ZTk5MD
 
 // can i use const and access it from script instead of using var and access it throw window ?
 var moviesUrl = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
-var tvsapiUrl = 'https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=1&sort_by=created_at.asc';
+var tvsUrl = 'https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=1&sort_by=created_at.asc';
 var personsUrl = 'https://api.themoviedb.org/3/person/popular?language=en-US&page=1';
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -42,23 +42,24 @@ function click(type, imgPathName, cardTitileName, dateName) {
         }
         console.log(cards);
         cards.forEach(card => {
-            console.log(card);
-            const carditem = document.createElement('div'); // Create a new card for each movie
-            carditem.classList.add("card");
-            carditem.innerHTML = `
-                    <a href="card.html?id=${card.id}&type=${type}">
-                        <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
-                    </a>
-                    <p>${card[cardTitileName]}</p>
-                    <p id="date">${new Date(card[dateName]).toDateString()}</p>  
-                `;
-            cardsList.appendChild(carditem);
+            if (!(type === 'person' && card.gender === 1)) {
+                console.log(card);
+                const carditem = document.createElement('div'); // Create a new card for each movie
+                carditem.classList.add("card");
+                carditem.innerHTML = `
+                        <a href="card.html?id=${card.id}&type=${type}">
+                            <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
+                        </a>
+                        <p>${card[cardTitileName]}</p>
+                        <p id="date">${new Date(card[dateName]).toDateString()}</p>  
+                    `;
+                cardsList.appendChild(carditem);
+            }
         });
     });
 
 
 }
-
 
 if (type === "movies") {
     click('movie', 'poster_path', 'title', 'release_date');
