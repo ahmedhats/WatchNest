@@ -11,13 +11,15 @@ body {
 }
 
 
-a {
+a,
+i {
     color: white;
     text-decoration: none;
     transition: 0.3s ease-in-out;
 }
 
-a:hover {
+a:hover,
+i:hover {
     color: #3498db;
 }
 
@@ -130,6 +132,8 @@ nav {
 }
 
 #right-nav {
+    display: flex;
+    align-items: center;
     padding-right: 2vw;
 }
 
@@ -172,16 +176,26 @@ ul li:hover::after {
     left: 0;
 }
 
-#changePage {
-    cursor: pointer;
-    display: flex;
-    /* align-content: start;  */
-    justify-content: space-evenly;
+#search {
+    /* display: none; */
+    border-radius: 2vw;
+    border: none;
+    font-size: large;
+    padding: 0.5vw 1vw;
 }
 
-#changePage h2 {
-    width: fit-content;
-    text-align: center;
+#loadPage {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    width: 100%
+}
+
+#loadPage h2 {
+    padding: 1vw 2vw;
+    background-color: #000000;
+    border-radius: 2vw;
+    color: #00ffff;
 
 }
 
@@ -217,7 +231,6 @@ ul li:hover::after {
 }
 
 .card,
-#changePage,
 h2,
 img,
 p,

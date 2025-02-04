@@ -9,8 +9,10 @@
     />
     <title>WatchNest</title>
     <link rel="stylesheet" href="../CSS/cards.css" />
+    <script src="../JS/cards.js"></script>
+    <!-- place script at the end if a problem arised -->
   </head>
-  <body>
+  <body onload="handleClick()">
     <nav>
       <ul id="left-nav">
         <li><a href="../HTML/index.html">Home</a></li>
@@ -34,7 +36,7 @@
           people
           <ul class="dropdown">
             <li>
-              <a href="../HTML/cards.html?type=persons&page=1">Popular</a>
+              <a href="../HTML/cards.html?type=persons">Popular</a>
             </li>
           </ul>
         </li>
@@ -55,17 +57,20 @@
           <a href="#"><i class="fas fa-user-circle"></i></a>
         </li>
         <li>
-          <a href="#"><i class="fas fa-search"></i></a>
+          <input
+            id="search"
+            type="text"
+            placeholder="search the current page"
+          />
+          <i onclick="handleClick(false,true)" class="fas fa-search"></i>
         </li>
       </ul>
     </nav>
     <div id="cards"></div>
-    <div id="changePage">
-      <h2 onclick="previousPage()">Previous</h2>
-      <h2 onclick="nextPage()">Next</h2>
+    <div id="loadPage">
+      <h2 onclick="handleClick(true,false)">Load More</h2>
     </div>
   </body>
-  <script src="../JS/cards.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
 </html>

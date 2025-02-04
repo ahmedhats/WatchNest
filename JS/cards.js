@@ -13,6 +13,7 @@ var favMoviesUrl = 'https://api.themoviedb.org/3/account/21780644/favorite/movie
 const urlParams = new URLSearchParams(window.location.search);
 const type = urlParams.get("type");
 
+
 async function fetchResults(url) {
     try {
         const options = {
@@ -35,63 +36,72 @@ async function fetchResults(url) {
         return [];
     }
 }
-function click(type, imgPathName, cardTitileName, dateName) {
+function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSearching) {
     const cardsList = document.getElementById("cards");
-    cardsList.innerHTML = ""; // Clear previous results before adding new ones
+    if (!isLoadingMore) {
+        cardsList.innerHTML = ""; // Clear previous results before adding new ones
+    }
+
     fetchResults(window[`${type}sUrl`]).then(cards => {
         if (!cards || cards.length === 0) {
             console.log(`No ${type} found`);
             return;
         }
+
         console.log(cards);
         cards.forEach(card => {
             if (!(type === 'person' && card.gender === 1)) {
-                console.log(card);
-                const carditem = document.createElement('div'); // Create a new card for each movie
-                carditem.classList.add("card");
-                carditem.innerHTML = `
-                        <a href="card.html?id=${card.id}&type=${type}">
-                            <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
-                        </a>
-                        <p>${card[cardTitileName]}</p>
-                        <p id="date">${new Date(card[dateName]).toDateString()}</p>  
-                    `;
-                cardsList.appendChild(carditem);
+                if (isSearching) {
+                    if (card[cardTitileName].toLowerCase().includes(searchKeywoard())) {
+                        drawCard(card);
+                    }
+                }
+                else {
+                    drawCard(card);
+                }
             }
         });
     });
 
-
+    function drawCard(card) {
+        const carditem = document.createElement('div'); // Create a new card for each movie
+        carditem.classList.add("card");
+        carditem.innerHTML = `
+                <a href="card.html?id=${card.id}&type=${type}">
+                    <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
+                </a>
+                <p>${card[cardTitileName]}</p>
+                <p id="date">${new Date(card[dateName]).toDateString()}</p>  
+            `;
+        cardsList.appendChild(carditem);
+    }
 }
-function handleClick() {
-    moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc`;
-    personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`;
-
+function handleClick(isLoadingMore = false, isSearching = false) {
+    if (isLoadingMore) {
+        currentPage++;
+        personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`;
+        moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc`;
+    }
     if (type === "movies") {
-        click('movie', 'poster_path', 'title', 'release_date');
+        click('movie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching);
     }
     else if (type === "favMovies") {
-        click('favMovie', 'poster_path', 'title', 'release_date')
+        click('favMovie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching)
     }
     else if (type === "tvs") {
-        click('tv', 'poster_path', 'name', 'first_air_date');
+        click('tv', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching);
     }
     else if (type == "tvALs") {
-        click('tvAL', 'poster_path', 'name', 'first_air_date');
+        click('tvAL', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching);
     }
 
     else if (type === "persons") {
-        click('person', 'profile_path', 'name', 'date');
+        click('person', 'profile_path', 'name', 'date', isLoadingMore, isSearching);
     }
 }
-handleClick();
-function nextPage() {
-    currentPage++;
-    handleClick();
+function searchKeywoard() {
+    const searchItem = document.getElementById("search");
+    const keywoard = searchItem.value;
+    return keywoard.toLowerCase().trim();
 }
-function previousPage() {
-    if (currentPage > 1) {
-        currentPage--;
-        handleClick();
-    }
-}
+
