@@ -131,6 +131,7 @@ ul li:hover::after {
     }
 }
 
+section,
 img,
 p,
 ul li {
@@ -145,5 +146,130 @@ ul li {
 
     ul li {
         font-size: 1rem;
+    }
+}
+
+section {
+    margin-top: 6vw;
+    width: 100%;
+    height: fit-content;
+    position: relative;
+}
+
+.backdrops {
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+.backdrops::before {
+    content: "";
+    background-color: rgb(0, 0, 0, 0.5);
+    position: absolute;
+    width: 100%;
+    height: 88vh;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+.backdrops div {
+    flex: 1;
+    height: 88vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.one {
+    background-image: image-set(url('https://media.themoviedb.org/t/p/w260_and_h450_smart/1pmXyN3sKeYoUhu5VBZiDU4BX21.jpg') 1x,
+            url('https://media.themoviedb.org/t/p/w520_and_h900_smart/1pmXyN3sKeYoUhu5VBZiDU4BX21.jpg') 2x);
+}
+
+.two {
+    background-image: image-set(url('https://media.themoviedb.org/t/p/w260_and_h450_smart/b85bJfrTOSJ7M5Ox0yp4lxIxdG1.jpg') 1x,
+            url('https://media.themoviedb.org/t/p/w520_and_h900_smart/b85bJfrTOSJ7M5Ox0yp4lxIxdG1.jpg') 2x);
+}
+
+.three {
+    background-image: image-set(url('https://media.themoviedb.org/t/p/w260_and_h450_smart/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg') 1x,
+            url('https://media.themoviedb.org/t/p/w520_and_h900_smart/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg') 2x);
+}
+
+.four {
+    background-image: image-set(url('https://media.themoviedb.org/t/p/w260_and_h450_smart/rRBD8ORo9y34tYkAQJVbn4Ml6tu.jpg') 1x,
+            url('https://media.themoviedb.org/t/p/w520_and_h900_smart/rRBD8ORo9y34tYkAQJVbn4Ml6tu.jpg') 2x);
+}
+
+.five {
+    background-image: image-set(url('https://media.themoviedb.org/t/p/w260_and_h450_smart/by8z9Fe8y7p4jo2YlW2SZDnptyT.jpg') 1x,
+            url('https://media.themoviedb.org/t/p/w520_and_h900_smart/by8z9Fe8y7p4jo2YlW2SZDnptyT.jpg') 2x);
+}
+
+.content {
+    position: absolute;
+    top: 6vw;
+    left: 6vw;
+    z-index: 2;
+    animation: contentFadeIn 1.5s ease-in-out;
+}
+
+.content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    animation: glow 2s infinite alternate;
+}
+
+.content h1 span {
+    color: #ffcc00;
+    text-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
+}
+
+.content h2 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.content a {
+    display: inline-block;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: black;
+    background: #ffcc00;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: transform 0.3s ease-in-out, 0.3s ease-in-out;
+}
+
+.content a:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+    }
+
+    to {
+        text-shadow: 0 0 25px rgba(255, 204, 0, 1), 0 0 50px rgba(255, 204, 0, 0.8);
+    }
+}
+
+@keyframes contentFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

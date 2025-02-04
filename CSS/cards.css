@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     background-color: #010a19;
@@ -168,6 +172,18 @@ ul li:hover::after {
     left: 0;
 }
 
+#changePage {
+    cursor: pointer;
+    display: flex;
+    /* align-content: start;  */
+    justify-content: space-evenly;
+}
+
+#changePage h2 {
+    width: fit-content;
+    text-align: center;
+
+}
 
 @keyframes floatingCards {
     0% {
@@ -201,6 +217,8 @@ ul li:hover::after {
 }
 
 .card,
+#changePage,
+h2,
 img,
 p,
 ul li {
@@ -211,6 +229,10 @@ ul li {
     nav {
         font-size: 4vw;
         height: 10vw;
+    }
+
+    #cards {
+        padding: 10.5vw 0;
     }
 
     .card {

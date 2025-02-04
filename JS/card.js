@@ -20,7 +20,7 @@ async function fetchcard(url) {
 
     return data;
 }
-if (type === "movie") {
+if (type === "movie" || type == "favMovie") {
     // cardItem.innerHTML="";
     fetchcard(Movieurl).then(movie => {
         cardItem.innerHTML = `
