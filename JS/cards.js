@@ -5,10 +5,10 @@ const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZDUzZTM3YjA0N2EzMGE4ZTk5MD
 
 // can i use const and access it from script instead of using var and access it throw window ?
 var moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc`;
-var tvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=1&sort_by=created_at.asc`;
-var tvALsUrl = `https://api.themoviedb.org/3/account/21780644/lists?page=1`;
+var favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=created_at.asc`;
+var tvsUrl = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}`
 var personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`;
-var favMoviesUrl = 'https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=1&sort_by=created_at.asc';
+var favMoviesUrl = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=created_at.asc`;
 var TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`;
 var TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`;
 
@@ -34,7 +34,7 @@ async function fetchResults(url) {
         const data = await response.json();
         return data.results;
     } catch (error) {
-        console.error("Error fetching TV series:", error);
+        console.error("Error fetching  data:", error);
         return [];
     }
 }
@@ -47,6 +47,7 @@ function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSea
     fetchResults(window[`${type}sUrl`]).then(cards => {
         if (!cards || cards.length === 0) {
             console.log(`No ${type} found`);
+            alert(`No ${type} found`)
             return;
         }
 
@@ -87,7 +88,9 @@ function handleClick(isLoadingMore = false, isSearching = false) {
         personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`;
         moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc`;
         TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`;
+        favMoviesUrl = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=created_at.asc`;
         TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`;
+        favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=created_at.asc`;
     }
     if (type === "movies") {
         click('movie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching, true);
@@ -99,10 +102,10 @@ function handleClick(isLoadingMore = false, isSearching = false) {
         click('TRMovie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching, true)
     }
     else if (type === "tvs") {
-        click('tv', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching, false);
+        click('tv', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching, true);
     }
-    else if (type === "tvALs") {
-        click('tvAL', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching, false);
+    else if (type === "favTvs") {
+        click('favTv', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching, false);
     }
     else if (type === "TRTvs") {
         click('TRTv', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching, true);
