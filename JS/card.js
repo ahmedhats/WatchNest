@@ -9,9 +9,9 @@ const Tvurl = `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}`;
 const Personurl = `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}`;
 const cardItem = document.getElementById("card");
 
-if (type === "movie" || type === "TRMovie" || type === "TRTv") {
+if (!(type === "favTv" || type === "favMovie" || type === "person")) {
     cardItem.classList.add("blured");
-    document.documentElement.style.setProperty('--overlay-bg', "rgba(0, 0, 0, 0.95s)");
+    document.documentElement.style.setProperty('--overlay-bg', "rgba(0, 0, 0, 0.93)");
 }
 async function fetchcard(url) {
     const response = await fetch(url);
@@ -35,7 +35,7 @@ if (type === "movie" || type === "favMovie" || type === "TRMovie") {
         console.log(movie);
     });
 }
-else if (type === "tv" || type === "TRTv") {
+else if (type === "tv" || type === "TRTv" || type === "favTv") {
     // cardItem.innerHTML="";
     fetchcard(Tvurl).then(TvSerie => {
         cardItem.innerHTML =
