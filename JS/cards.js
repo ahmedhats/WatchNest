@@ -6,9 +6,11 @@ const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZDUzZTM3YjA0N2EzMGE4ZTk5MD
 // can i use const and access it from script instead of using var and access it throw window ?
 var moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc`;
 var tvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=1&sort_by=created_at.asc`;
-var tvALsUrl = `https://api.themoviedb.org/3/account/21780644/lists?page=1`
+var tvALsUrl = `https://api.themoviedb.org/3/account/21780644/lists?page=1`;
 var personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`;
-var favMoviesUrl = 'https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=1&sort_by=created_at.asc'
+var favMoviesUrl = 'https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=1&sort_by=created_at.asc';
+var TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`;
+var TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`;
 
 const urlParams = new URLSearchParams(window.location.search);
 const type = urlParams.get("type");
@@ -36,7 +38,7 @@ async function fetchResults(url) {
         return [];
     }
 }
-function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSearching) {
+function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSearching, isBlured) {
     const cardsList = document.getElementById("cards");
     if (!isLoadingMore) {
         cardsList.innerHTML = ""; // Clear previous results before adding new ones
@@ -53,19 +55,22 @@ function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSea
             if (!(type === 'person' && card.gender === 1)) {
                 if (isSearching) {
                     if (card[cardTitileName].toLowerCase().includes(searchKeywoard())) {
-                        drawCard(card);
+                        drawCard(card, isBlured);
                     }
                 }
                 else {
-                    drawCard(card);
+                    drawCard(card, isBlured);
                 }
             }
         });
     });
 
-    function drawCard(card) {
+    function drawCard(card, isBlured) {
         const carditem = document.createElement('div'); // Create a new card for each movie
         carditem.classList.add("card");
+        if (isBlured) {
+            carditem.classList.add("blured");
+        }
         carditem.innerHTML = `
                 <a href="card.html?id=${card.id}&type=${type}">
                     <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
@@ -81,22 +86,30 @@ function handleClick(isLoadingMore = false, isSearching = false) {
         currentPage++;
         personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`;
         moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc`;
+        TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`;
+        TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`;
     }
     if (type === "movies") {
-        click('movie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching);
+        click('movie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching, true);
     }
     else if (type === "favMovies") {
-        click('favMovie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching)
+        click('favMovie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching, false)
+    }
+    else if (type === "TRMovies") {
+        click('TRMovie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching, true)
     }
     else if (type === "tvs") {
-        click('tv', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching);
+        click('tv', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching, false);
     }
-    else if (type == "tvALs") {
-        click('tvAL', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching);
+    else if (type === "tvALs") {
+        click('tvAL', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching, false);
+    }
+    else if (type === "TRTvs") {
+        click('TRTv', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching, true);
     }
 
     else if (type === "persons") {
-        click('person', 'profile_path', 'name', 'date', isLoadingMore, isSearching);
+        click('person', 'profile_path', 'name', 'date', isLoadingMore, isSearching, false);
     }
 }
 function searchKeywoard() {

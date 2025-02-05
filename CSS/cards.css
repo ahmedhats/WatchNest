@@ -196,7 +196,7 @@ ul li:hover::after {
     background-color: #000000;
     border-radius: 2vw;
     color: #00ffff;
-
+    margin-top: 0;
 }
 
 @keyframes floatingCards {
@@ -217,6 +217,9 @@ ul li:hover::after {
     animation: floatingCards 1.5s infinite ease-in-out;
 }
 
+.blured img {
+    filter: blur(20px);
+}
 
 @keyframes fadeIn {
     from {
