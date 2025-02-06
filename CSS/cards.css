@@ -10,7 +10,21 @@ body {
     overflow-x: hidden;
 }
 
+body::-webkit-scrollbar{
+    width: 0.5rem;
+}
+body::-webkit-scrollbar-track{
+    background:#3498db59;
+}
+body::-webkit-scrollbar-thumb{
+    background: #ff00ff86;
+}
 
+.icons{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.3vw;
+}
 a,
 i {
     color: white;
@@ -241,25 +255,53 @@ ul li {
     animation: fadeIn 1s ease-in-out;
 }
 
-@media (max-width: 768px) {
-    nav {
-        font-size: 4vw;
-        height: 10vw;
-    }
-
-    #cards {
-        padding: 10.5vw 0;
-    }
-
+@media (max-width: 940px) {
     .card {
         width: 31%;
     }
-
-    p {
-        font-size: 0.8rem;
-    }
-
     ul li {
         font-size: 1rem;
     }
 }
+
+@media (max-width: 725px){
+    ul{
+        margin: 0;
+    }
+    nav {
+        font-size: 6vw;
+        height: 15vw;
+        flex-direction: column;
+        justify-content: center;
+        gap: 3vw;
+    }
+    #right-nav{
+        justify-content: space-between;
+    }
+    #left-nav{
+        display: flex;
+        justify-content: space-around;
+    }
+    .icons{
+        padding-left: 2vw;
+    }
+    #search{
+        width:50vw;
+    }
+    #cards {
+        padding: 15.5vw 0;
+    }
+    
+    p {
+        font-size: 0.8rem;
+    }
+
+    ul{
+        width: 100%;
+        /* display: flex; */
+        
+    }
+    
+}
+
+

@@ -15,6 +15,7 @@ var TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${
 const urlParams = new URLSearchParams(window.location.search);
 const type = urlParams.get("type");
 
+var allCards = [];
 
 async function fetchResults(url) {
     try {
@@ -52,7 +53,12 @@ function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSea
         }
 
         console.log(cards);
-        cards.forEach(card => {
+        allCards = [...allCards, ...cards];
+
+        console.log(allCards);
+        cardsList.innerHTML="";
+
+        allCards.forEach(card => {
             if (!(type === 'person' && card.gender === 1)) {
                 if (isSearching) {
                     if (card[cardTitileName].toLowerCase().includes(searchKeywoard())) {
@@ -72,14 +78,35 @@ function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSea
         if (isBlured) {
             carditem.classList.add("blured");
         }
-        carditem.innerHTML = `
-                <a href="card.html?id=${card.id}&type=${type}">
-                    <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
-                </a>
-                <p>${card[cardTitileName]}</p>
-                <p id="date">${new Date(card[dateName]).toDateString()}</p>  
-            `;
+        console.log(type);
+        if(type==="person"){
+            let popularity = Math.min(card.popularity, 100);
+            carditem.innerHTML += `
+            <a href="card.html?id=${card.id}&type=${type}">
+                <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
+            </a>
+            <p>${card[cardTitileName]}</p>
+            <p id="departmen">${card.known_for_department}<span id="popularity"> ${card.popularity}</span></p>
+            <div class="popularity-bar">
+            <div class="popularity-container">
+            <div class="popularity-bar"></div>
+        </div>
+        `; 
+
+        }
+        else{
+            carditem.innerHTML += `
+                    <a href="card.html?id=${card.id}&type=${type}">
+                        <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
+                    </a>
+                    <p>${card[cardTitileName]}</p>
+                    <p id="date">${new Date(card[dateName]).toDateString()}</p>  
+                `;  
+        }
         cardsList.appendChild(carditem);
+        setTimeout(() => {
+            carditem.querySelector(".popularity-bar").style.width = `${popularity}%`;
+        }, 100);
     }
 }
 function handleClick(isLoadingMore = false, isSearching = false) {
@@ -112,7 +139,7 @@ function handleClick(isLoadingMore = false, isSearching = false) {
     }
 
     else if (type === "persons") {
-        click('person', 'profile_path', 'name', 'date', isLoadingMore, isSearching, false);
+        click('person', 'profile_path', 'name', 'known_for_department', isLoadingMore, isSearching, false);
     }
 }
 function searchKeywoard() {
@@ -121,3 +148,16 @@ function searchKeywoard() {
     return keywoard.toLowerCase().trim();
 }
 
+const search = document.getElementById("search");
+search.addEventListener("keypress", (event) => {
+    if(event.key==="Enter"){
+        handleClick(false,true);
+    }
+    
+
+})
+
+
+
+
+  

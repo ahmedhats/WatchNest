@@ -9,7 +9,6 @@
     />
     <title>WatchNest</title>
     <link rel="stylesheet" href="../CSS/cards.css" />
-    <script src="../JS/cards.js"></script>
     <!-- place script at the end if a problem arised -->
   </head>
   <body onload="handleClick()">
@@ -44,25 +43,27 @@
         <!-- it was onclick event listener but it wasn't working properly also anchor tags make the return button work well -->
       </ul>
       <ul id="right-nav">
-        <li>
-          <a href="#"><i class="fas fa-plus"></i></a>
-        </li>
-        <li>
-          <a href="#"><i class="fas fa-globe"></i></a>
-        </li>
-        <li>
-          <a href="#"><i class="fas fa-bell"></i></a>
-        </li>
-        <li>
-          <a href="#"><i class="fas fa-user-circle"></i></a>
-        </li>
-        <li>
-          <input
-            id="search"
-            type="text"
-            placeholder="search the current page"
+        <div class="icons">
+          <li>
+            <a href="#"><i class="fas fa-plus"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-globe"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-bell"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-user-circle"></i></a>
+          </li>
+        </div>
+        <li>  
+          <input 
+          id="search"
+          type="text"
+          placeholder="search the current page"
           />
-          <i onclick="handleClick(false,true)" class="fas fa-search"></i>
+          <i  onclick="handleClick(false,true)" class="fas fa-search"></i>
         </li>
       </ul>
     </nav>
@@ -71,6 +72,7 @@
       <h2 onclick="handleClick(true,false)">Load More</h2>
     </div>
   </body>
+  <script src="../JS/cards.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
 </html>

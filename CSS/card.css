@@ -28,6 +28,16 @@ body::before {
     z-index: -1;
 }
 
+body::-webkit-scrollbar{
+    width: 0.5rem;
+}
+body::-webkit-scrollbar-track{
+    background:#3498db59;
+}
+body::-webkit-scrollbar-thumb{
+    background: #ff00ff86;
+}
+
 a {
     color: white;
     text-decoration: none;
