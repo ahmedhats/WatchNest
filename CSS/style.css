@@ -287,7 +287,7 @@ section {
     nav {
         font-size: 6vw;
         height: 15vw;
-        flex-direction: column;
+        flex-direction: column-reverse;
         justify-content: center;
         gap: 3vw;
     }

@@ -43,6 +43,7 @@ function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSea
     const cardsList = document.getElementById("cards");
     if (!isLoadingMore) {
         cardsList.innerHTML = ""; // Clear previous results before adding new ones
+        // allCards = [];
     }
 
     fetchResults(window[`${type}sUrl`]).then(cards => {
@@ -59,6 +60,7 @@ function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSea
         cardsList.innerHTML="";
 
         allCards.forEach(card => {
+            console.log(allCards);    
             if (!(type === 'person' && card.gender === 1)) {
                 if (isSearching) {
                     if (card[cardTitileName].toLowerCase().includes(searchKeywoard())) {
@@ -77,16 +79,16 @@ function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSea
         carditem.classList.add("card");
         if (isBlured) {
             carditem.classList.add("blured");
-        }
-        console.log(type);
+        }                                                               
         if(type==="person"){
-            let popularity = Math.min(card.popularity, 100);
+            let popularity = Math.min((card.popularity/250)*100, 100);
+            console.log(popularity);
             carditem.innerHTML += `
             <a href="card.html?id=${card.id}&type=${type}">
                 <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
             </a>
             <p>${card[cardTitileName]}</p>
-            <p id="departmen">${card.known_for_department}<span id="popularity"> ${card.popularity}</span></p>
+            <p id="departmen">${card.known_for_department}<span id="popularity"> ${popularity.toFixed(1)}%</span></p>
             <div class="popularity-bar">
             <div class="popularity-container">
             <div class="popularity-bar"></div>
@@ -104,9 +106,6 @@ function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSea
                 `;  
         }
         cardsList.appendChild(carditem);
-        setTimeout(() => {
-            carditem.querySelector(".popularity-bar").style.width = `${popularity}%`;
-        }, 100);
     }
 }
 function handleClick(isLoadingMore = false, isSearching = false) {
