@@ -1,3 +1,14 @@
+:root {
+    /* Adjust these values as needed:
+       - The nav height will never go below 60px,
+       - It will scale based on 12vw (which means it responds to viewport width changes),
+       - And it will never exceed 100px. */
+    --nav-height: clamp(60px, 12vw, 100px);
+  }
+
+html{
+    scroll-behavior: smooth;
+}
 body {
     margin: 0;
     background-color: #010a19;
@@ -22,7 +33,7 @@ a:hover {
 }
 
 nav {
-    height: 6vw;
+    height: var(--nav-height);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -135,7 +146,7 @@ ul li:hover::after {
         transform: translateY(0);
     }
 }
-
+h2,
 section,
 img,
 p,
@@ -143,19 +154,8 @@ ul li {
     animation: fadeIn 1s ease-in-out;
 }
 
-@media (max-width: 768px) {
-    nav {
-        font-size: 4vw;
-        height: 10vw;
-    }
-
-    ul li {
-        font-size: 1rem;
-    }
-}
-
-section {
-    margin-top: 6vw;
+#section1 {
+    margin-top: var(--nav-height);
     width: 100%;
     height: fit-content;
     position: relative;
@@ -216,10 +216,10 @@ section {
     top: 6vw;
     left: 6vw;
     z-index: 2;
-    animation: contentFadeIn 1.5s ease-in-out;
+    animation: fadeOut 1.5s ease-in-out;
 }
 
-.content h1 {
+.content h1,#section2 h2 {
     font-size: 3rem;
     font-weight: bold;
     letter-spacing: 2px;
@@ -267,7 +267,7 @@ section {
     }
 }
 
-@keyframes contentFadeIn {
+@keyframes fadeOut {
     from {
         opacity: 0;
         transform: translateY(-30px);
@@ -279,7 +279,119 @@ section {
     }
 }
 
+/* section 2  */
 
+#section2{
+    min-height: 100vh;
+}
+
+.card{
+    animation: fadeOut 1.5s ease-in-out;
+}
+
+#section2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(3, 37, 65, 0.9);
+    backdrop-filter: blur(5px);
+    text-align: center;
+    color: white;
+  }
+  
+  #section2 h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #ffcc00;  
+  }
+  
+  #section2 p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  #section2 .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5vw;
+  }
+  
+  #section2 .card {
+    background: rgba(0, 50, 50, 0.8);
+    border-radius: 10px;
+    padding: 2rem;
+    width: 300px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+    margin-bottom: 2rem;
+  }
+  
+  #section2 .card:hover {
+    transform: translateY(-10px);
+  }
+  
+  #section2 .card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+  
+  #section2 .card a {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.8rem 1.2rem;
+    background-color: #3498db;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  #section2 .card a:hover {
+    background-color: #fff;
+    color: #3498db;
+  }
+
+/* footer */
+  footer {
+    background-color: #000; /* Solid black background */
+    color: #fff;
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  footer p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+  .social-links {
+    margin: 1rem 0;
+  }
+  
+  .social-links a {
+    color: #fff;
+    font-size: 1.5rem;
+    margin: 0 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .social-links a:hover {
+    color: #3498db;
+  }
+  
+/* responsivness */
 @media (max-width: 725px){
     ul{
         margin: 0;
