@@ -15,9 +15,9 @@ var TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${
 const urlParams = new URLSearchParams(window.location.search);
 const type = urlParams.get("type");
 
-var allCards = [];
+var allCards = []; // all cards to be rendered will be here 
 
-async function fetchResults(url) {
+async function fetchResults(url) {//fetching function to get cards from TMDB API 
     try {
         const options = {
             method: 'GET',
@@ -39,49 +39,49 @@ async function fetchResults(url) {
         return [];
     }
 }
-function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSearching, isBlured) {
+function processPageData(type, imgPathName, cardTitileName, dateName, isSearching, isBlured) {
     const cardsList = document.getElementById("cards");
-    if (!isLoadingMore) {
-        cardsList.innerHTML = ""; // Clear previous results before adding new ones
-        // allCards = [];
+    cardsList.innerHTML = "";//clear the DOM each call preventing dublicated data
+    if (!isSearching) {
+        fetchResults(window[`${type}sUrl`]).then(cards => {
+            if (!cards || cards.length === 0) {
+                console.log(`No ${type} found`);
+                alert(`No ${type} found`)
+                return;
+            }
+            if (type === 'person') {//if we are in the popular people we only store the men for less storage
+                cards = cards.filter(card => card.gender !== 1);
+            }
+            allCards = [...allCards, ...cards];
+            console.log(allCards);
+            renderCards(allCards, isSearching, isBlured);
+        });
+    }
+    else {
+        renderCards(allCards, isSearching, isBlured);
     }
 
-    fetchResults(window[`${type}sUrl`]).then(cards => {
-        if (!cards || cards.length === 0) {
-            console.log(`No ${type} found`);
-            alert(`No ${type} found`)
-            return;
-        }
-
-        console.log(cards);
-        allCards = [...allCards, ...cards];
-
-        console.log(allCards);
-        cardsList.innerHTML="";
-
+    function renderCards(allCards, isSearching, isBlured) {//renders the cards based user searching or not 
         allCards.forEach(card => {
-            console.log(allCards);    
-            if (!(type === 'person' && card.gender === 1)) {
-                if (isSearching) {
-                    if (card[cardTitileName].toLowerCase().includes(searchKeywoard())) {
-                        drawCard(card, isBlured);
-                    }
-                }
-                else {
+            if (isSearching) {
+                if (card[cardTitileName].toLowerCase().includes(searchKeywoard())) {
                     drawCard(card, isBlured);
                 }
             }
+            else {
+                drawCard(card, isBlured);
+            }
         });
-    });
+    }
 
-    function drawCard(card, isBlured) {
-        const carditem = document.createElement('div'); // Create a new card for each movie
+    function drawCard(card, isBlured) {//displays each card details based on type of the card
+        const carditem = document.createElement('div'); // Create a new card for each object
         carditem.classList.add("card");
         if (isBlured) {
             carditem.classList.add("blured");
-        }                                                               
-        if(type==="person"){
-            let popularity = Math.min((card.popularity/250)*100, 100);
+        }
+        if (type === "person") {// the person don't have date atterbute so the popularity is shown instead
+            let popularity = Math.min((card.popularity / 250) * 100, 100);
             console.log(popularity);
             carditem.innerHTML += `
             <a href="card.html?id=${card.id}&type=${type}">
@@ -93,52 +93,53 @@ function click(type, imgPathName, cardTitileName, dateName, isLoadingMore, isSea
             <div class="popularity-container">
             <div class="popularity-bar"></div>
         </div>
-        `; 
+        `;
 
         }
-        else{
+        else {
             carditem.innerHTML += `
                     <a href="card.html?id=${card.id}&type=${type}">
                         <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
                     </a>
                     <p>${card[cardTitileName]}</p>
                     <p id="date">${new Date(card[dateName]).toDateString()}</p>  
-                `;  
+                `;
         }
         cardsList.appendChild(carditem);
     }
 }
-function handleClick(isLoadingMore = false, isSearching = false) {
+function managePageState(isLoadingMore = false, isSearching = false) {
     if (isLoadingMore) {
         currentPage++;
         personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`;
         moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc`;
         TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`;
         favMoviesUrl = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=created_at.asc`;
+        tvsUrl = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}`
         TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`;
         favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=created_at.asc`;
     }
     if (type === "movies") {
-        click('movie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching, true);
+        processPageData('movie', 'poster_path', 'title', 'release_date', isSearching, true);
     }
     else if (type === "favMovies") {
-        click('favMovie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching, false)
+        processPageData('favMovie', 'poster_path', 'title', 'release_date', isSearching, false)
     }
     else if (type === "TRMovies") {
-        click('TRMovie', 'poster_path', 'title', 'release_date', isLoadingMore, isSearching, true)
+        processPageData('TRMovie', 'poster_path', 'title', 'release_date', isSearching, true)
     }
     else if (type === "tvs") {
-        click('tv', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching, true);
+        processPageData('tv', 'poster_path', 'name', 'first_air_date', isSearching, true);
     }
     else if (type === "favTvs") {
-        click('favTv', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching, false);
+        processPageData('favTv', 'poster_path', 'name', 'first_air_date', isSearching, false);
     }
     else if (type === "TRTvs") {
-        click('TRTv', 'poster_path', 'name', 'first_air_date', isLoadingMore, isSearching, true);
+        processPageData('TRTv', 'poster_path', 'name', 'first_air_date', isSearching, true);
     }
 
     else if (type === "persons") {
-        click('person', 'profile_path', 'name', 'known_for_department', isLoadingMore, isSearching, false);
+        processPageData('person', 'profile_path', 'name', 'known_for_department', isSearching, false);
     }
 }
 function searchKeywoard() {
@@ -149,14 +150,13 @@ function searchKeywoard() {
 
 const search = document.getElementById("search");
 search.addEventListener("keypress", (event) => {
-    if(event.key==="Enter"){
-        handleClick(false,true);
+    if (event.key === "Enter") {
+        managePageState(false, true);
     }
-    
+
 
 })
 
 
 
 
-  

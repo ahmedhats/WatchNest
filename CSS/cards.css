@@ -10,21 +10,24 @@ body {
     overflow-x: hidden;
 }
 
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
     width: 0.5rem;
 }
-body::-webkit-scrollbar-track{
-    background:#3498db59;
+
+body::-webkit-scrollbar-track {
+    background: #3498db59;
 }
-body::-webkit-scrollbar-thumb{
+
+body::-webkit-scrollbar-thumb {
     background: #ff00ff86;
 }
 
-.icons{
+.icons {
     display: flex;
     flex-wrap: wrap;
     gap: 2.3vw;
 }
+
 a,
 i {
     color: white;
@@ -205,7 +208,7 @@ ul li:hover::after {
     width: 100%
 }
 
-#loadPage h2 {
+#loadPage a {
     padding: 1vw 2vw;
     background-color: #000000;
     border-radius: 2vw;
@@ -232,7 +235,7 @@ ul li:hover::after {
 }
 
 .blured img {
-    filter: blur(20px);
+    filter: blur(25px);
 }
 
 @keyframes fadeIn {
@@ -248,63 +251,67 @@ ul li:hover::after {
 }
 
 .card,
-h2,
+a,
 img,
 p,
-ul li {
+ul li { 
     animation: fadeIn 1s ease-in-out;
 }
+
 /* footer */
 footer {
-    background-color: #000; /* Solid black background */
+    background-color: #000;
+    /* Solid black background */
     color: #fff;
     padding: 2rem 0;
     text-align: center;
     margin-top: 2rem;
     position: relative;
     z-index: 10;
-  }
-  
-  .footer-container {
+}
+
+.footer-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  
-  footer p {
+}
+
+footer p {
     margin: 0.5rem 0;
     font-size: 1rem;
-  }
-  
-  .social-links {
+}
+
+.social-links {
     margin: 1rem 0;
-  }
-  
-  .social-links a {
+}
+
+.social-links a {
     color: #fff;
     font-size: 1.5rem;
     margin: 0 1rem;
     transition: color 0.3s ease;
-  }
-  
-  .social-links a:hover {
+}
+
+.social-links a:hover {
     color: #3498db;
-  }
+}
 
 @media (max-width: 940px) {
     .card {
         width: 31%;
     }
+
     ul li {
         font-size: 1rem;
     }
 }
 
-@media (max-width: 725px){
-    ul{
+@media (max-width: 725px) {
+    ul {
         margin: 0;
     }
+
     nav {
         font-size: 6vw;
         height: 15vw;
@@ -312,33 +319,36 @@ footer {
         justify-content: center;
         gap: 3vw;
     }
-    #right-nav{
+
+    #right-nav {
         justify-content: space-between;
     }
-    #left-nav{
+
+    #left-nav {
         display: flex;
         justify-content: space-around;
     }
-    .icons{
+
+    .icons {
         padding-left: 2vw;
     }
-    #search{
-        width:50vw;
+
+    #search {
+        width: 50vw;
     }
+
     #cards {
         padding: 15.5vw 0;
     }
-    
+
     p {
         font-size: 0.8rem;
     }
 
-    ul{
+    ul {
         width: 100%;
         /* display: flex; */
-        
+
     }
-    
+
 }
-
-

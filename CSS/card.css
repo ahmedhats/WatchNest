@@ -166,7 +166,7 @@ ul li:hover::after {
 }
 
 .blured img {
-    filter: blur(20px);
+    filter: blur(25px);
 }
 
 img {

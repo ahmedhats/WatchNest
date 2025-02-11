@@ -12,7 +12,7 @@
     <link rel="icon" type="image/png" href="../IMG/Logo.png">
     <!-- place script at the end if a problem arised -->
   </head>
-  <body onload="handleClick()">
+  <body onload="managePageState()">
     <nav>
       <ul id="left-nav">
         <li><a href="../HTML/index.html">Home</a></li>
@@ -64,14 +64,16 @@
           type="text"
           placeholder="search the current page"
           />
-          <i  onclick="handleClick(false,true)" class="fas fa-search"></i>
+          <i onclick="managePageState(false,true)" class="fas fa-search"></i>
         </li>
-      </ul>
+      </ul> 
     </nav>
     <div id="cards"></div>
     <div id="loadPage">
-      <h2 onclick="handleClick(true,false)">Load More</h2>
+      <a  onclick="managePageState(true,false)" href="#loadPage">Load More</a>
     </div>
+    <script src="../JS/cards.js"></script>
+    
     <footer>
       <div class="footer-container">
         <p>Connect with me:</p>
@@ -84,5 +86,4 @@
       </div>
     </footer>
   </body>
-  <script src="../JS/cards.js"></script>
 </html>
