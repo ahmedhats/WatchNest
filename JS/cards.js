@@ -1,9 +1,7 @@
-var currentPage = 1;
+var currentPage = new Number(1);
 
-const apiKey = '2d53e37b047a30a8e990816d6813bfa3';
 const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZDUzZTM3YjA0N2EzMGE4ZTk5MDgxNmQ2ODEzYmZhMyIsIm5iZiI6MTczODA2MTU5MC4yNzEwMDAxLCJzdWIiOiI2Nzk4YjcxNjcwMmY0OTJmNDc4ZjdjZDYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.vX3GiU1-gkhCN-Y4HLuF2SnQI-i6Z1WS0uzbG5n814M';
 
-// can i use const and access it from script instead of using var and access it throw window ?
 var moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc`;
 var favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=created_at.asc`;
 var tvsUrl = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}`
@@ -41,12 +39,14 @@ async function fetchResults(url) {//fetching function to get cards from TMDB API
 }
 function processPageData(type, imgPathName, cardTitileName, dateName, isSearching, isBlured) {
     const cardsList = document.getElementById("cards");
-    cardsList.innerHTML = "";//clear the DOM each call preventing dublicated data
     if (!isSearching) {
         fetchResults(window[`${type}sUrl`]).then(cards => {
             if (!cards || cards.length === 0) {
                 console.log(`No ${type} found`);
                 alert(`No ${type} found`)
+                if (allCards.length > 0) {//if user loaded more but ther is no more we should render the old cards
+                    renderCards(allCards, isSearching, isBlured);
+                }
                 return;
             }
             if (type === 'person') {//if we are in the popular people we only store the men for less storage
@@ -62,6 +62,7 @@ function processPageData(type, imgPathName, cardTitileName, dateName, isSearchin
     }
 
     function renderCards(allCards, isSearching, isBlured) {//renders the cards based user searching or not 
+        cardsList.innerHTML = "";//clear the DOM each call preventing dublicated data
         allCards.forEach(card => {
             if (isSearching) {
                 if (card[cardTitileName].toLowerCase().includes(searchKeywoard())) {
@@ -82,7 +83,6 @@ function processPageData(type, imgPathName, cardTitileName, dateName, isSearchin
         }
         if (type === "person") {// the person don't have date atterbute so the popularity is shown instead
             let popularity = Math.min((card.popularity / 250) * 100, 100);
-            console.log(popularity);
             carditem.innerHTML += `
             <a href="card.html?id=${card.id}&type=${type}">
                 <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
@@ -92,9 +92,8 @@ function processPageData(type, imgPathName, cardTitileName, dateName, isSearchin
             <div class="popularity-bar">
             <div class="popularity-container">
             <div class="popularity-bar"></div>
-        </div>
-        `;
-
+            </div>
+            `;
         }
         else {
             carditem.innerHTML += `
@@ -156,7 +155,7 @@ search.addEventListener("keypress", (event) => {
 
 
 })
-
-
-
+document.addEventListener('DOMContentLoaded', function () {
+    managePageState();
+});
 
