@@ -3,16 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WatchNest</title>
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="../CSS/card.css" />
+    <title>WatchNest</title>
+    <link rel="stylesheet" href="../CSS/home.css" />
     <link rel="icon" type="image/png" href="../IMG/Logo.png" />
   </head>
-
   <body>
     <nav>
       <ul id="left-nav">
@@ -57,8 +55,46 @@
         </li>
       </ul>
     </nav>
-    <div id="card"></div>
-    <script src="../JS/card.js"></script>
+    <section id="section1">
+      <div class="backdrops">
+        <div class="one"></div>
+        <div class="two"></div>
+        <div class="three"></div>
+        <div class="four"></div>
+        <div class="five"></div>
+      </div>
+      <div class="content">
+        <h1>Welcome To <span>WatchNest</span></h1>
+        <h2>Where you can discover Movies,Tv Series and much more!</h2>
+        <a href="#section2">Let's Get Started</a>
+      </div>
+    </section>
+    <section id="section2">
+      <div class="section2-container">
+        <h2>Discover More</h2>
+        <p>Check out my favorite movies, TV series, and popular persons.</p>
+        <div class="cards-container">
+          <div class="card">
+            <h3>Favorite Movies</h3>
+            <p>Explore a hand-picked selection of top movies.</p>
+            <a href="../HTML/cards.html?type=favMovies">View Movies</a>
+          </div>
+          <div class="card">
+            <h3>TV Series</h3>
+            <p>Discover trending and must-watch TV series.</p>
+            <a href="../HTML/cards.html?type=favTvs">View TV Series</a>
+          </div>
+          <div class="card">
+            <h3>Popular Persons</h3>
+            <p>
+              Meet the stars and the creative minds behind your favorite films.
+            </p>
+            <a href="../HTML/cards.html?type=persons">View Persons</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="../JS/home.js"></script>
     <footer>
       <div class="footer-container">
         <p>Connect with me:</p>
