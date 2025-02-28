@@ -512,11 +512,16 @@ footer p {
     gap: 3vw;
   }
   #right-nav {
-    justify-content: space-between;
+    /* justify-content: space-around; */
+    display: none;
+
   }
   #left-nav {
     display: flex;
     justify-content: space-around;
+  }
+  #left-nav a{
+    font-size: 4.5vw;
   }
   .icons {
     padding-left: 2vw;

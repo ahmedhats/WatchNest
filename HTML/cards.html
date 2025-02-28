@@ -9,7 +9,7 @@
     />
     <title>WatchNest</title>
     <link rel="stylesheet" href="../CSS/cards.css" />
-    <link rel="icon" type="image/png" href="../IMG/Logo.png">
+    <link rel="icon" type="image/png" href="../IMG/Logo.png" />
     <!-- place script at the end if a problem arised -->
   </head>
   <body>
@@ -17,7 +17,7 @@
       <ul id="left-nav">
         <li><a href="../HTML/home.html">Home</a></li>
         <li>
-          Movies
+          <a>Movies</a>
           <ul class="dropdown">
             <li><a href="../HTML/cards.html?type=movies">Popular</a></li>
             <li><a href="../HTML/cards.html?type=TRMovies">Top Rated</a></li>
@@ -25,7 +25,7 @@
           </ul>
         </li>
         <li>
-          TV Shows
+          <a>TV Shows</a>
           <ul class="dropdown">
             <li><a href="../HTML/cards.html?type=tvs">Popular</a></li>
             <li><a href="../HTML/cards.html?type=TRTvs">Top Rated</a></li>
@@ -33,7 +33,7 @@
           </ul>
         </li>
         <li>
-          people
+          <a>People</a>
           <ul class="dropdown">
             <li>
               <a href="../HTML/cards.html?type=persons">Popular</a>
@@ -58,29 +58,37 @@
             <a href="#"><i class="fas fa-user-circle"></i></a>
           </li>
         </div>
-        <li>  
-          <input 
-          id="search"
-          type="text"
-          placeholder="search the current page"
+        <li>
+          <input
+            id="search"
+            type="text"
+            placeholder="search the current page"
           />
           <i onclick="managePageState(false,true)" class="fas fa-search"></i>
         </li>
-      </ul> 
+      </ul>
     </nav>
     <div id="cards"></div>
     <div id="loadPage">
-      <a  onclick="managePageState(true,false)">Load More</a>
+      <a onclick="managePageState(true,false)">Load More</a>
     </div>
     <script src="../JS/cards.js"></script>
-    
+
     <footer>
       <div class="footer-container">
         <p>Connect with me:</p>
         <div class="social-links">
-          <a href="https://github.com/ahmedhats" target="_blank"><i class="fab fa-github"></i></a>
-          <a href="mailto:ahmedhatdev@gmail.com"><i class="fas fa-envelope"></i></a>
-          <a href="https://www.linkedin.com/in/ahmed-medhat-a80b16316/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/ahmedhats" target="_blank"
+            ><i class="fab fa-github"></i
+          ></a>
+          <a href="mailto:ahmedhatdev@gmail.com"
+            ><i class="fas fa-envelope"></i
+          ></a>
+          <a
+            href="https://www.linkedin.com/in/ahmed-medhat-a80b16316/"
+            target="_blank"
+            ><i class="fab fa-linkedin"></i
+          ></a>
         </div>
         <p>&copy; 2025 WatchNest. All rights reserved.</p>
       </div>
