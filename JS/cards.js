@@ -1,17 +1,22 @@
 var currentPage = new Number(1);
+var sortBy = 'popularity.desc';
+// popularity.desc  popularity.asc  vote_average.desc  vote_average.asc   original_title.desc   original_title.asc
 
 const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZDUzZTM3YjA0N2EzMGE4ZTk5MDgxNmQ2ODEzYmZhMyIsIm5iZiI6MTczODA2MTU5MC4yNzEwMDAxLCJzdWIiOiI2Nzk4YjcxNjcwMmY0OTJmNDc4ZjdjZDYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.vX3GiU1-gkhCN-Y4HLuF2SnQI-i6Z1WS0uzbG5n814M';
 
-var moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc`;
-var favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=created_at.asc`;
-var tvsUrl = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}`
-var personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`;
-var favMoviesUrl = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=created_at.asc`;
-var TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`;
-var TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`;
+var moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+var favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+var tvsUrl = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`
+var personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+var favMoviesUrl = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+var TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+var TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
 
 const urlParams = new URLSearchParams(window.location.search);
 const type = urlParams.get("type");
+
+const search = document.getElementById("search");
+
 
 var allCards = []; // all cards to be rendered will be here 
 
@@ -31,6 +36,7 @@ async function fetchResults(url) {//fetching function to get cards from TMDB API
         }
 
         const data = await response.json();
+        console.log(data);
         return data.results;
     } catch (error) {
         console.error("Error fetching  data:", error);
@@ -44,7 +50,7 @@ function processPageData(type, imgPathName, cardTitileName, dateName, isSearchin
             if (!cards || cards.length === 0) {
                 console.log(`No ${type} found`);
                 alert(`No ${type} found`)
-                if (allCards.length > 0) {//if user loaded more but ther is no more we should render the old cards
+                if (allCards.length > 0) {//if user loaded more but there is no more we should render the old cards
                     renderCards(allCards, isSearching, isBlured);
                 }
                 return;
@@ -107,16 +113,24 @@ function processPageData(type, imgPathName, cardTitileName, dateName, isSearchin
         cardsList.appendChild(carditem);
     }
 }
-function managePageState(isLoadingMore = false, isSearching = false) {
-    if (isLoadingMore) {
-        currentPage++;
-        personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`;
-        moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc`;
-        TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`;
-        favMoviesUrl = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=created_at.asc`;
-        tvsUrl = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}`
-        TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`;
-        favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=created_at.asc`;
+function managePageState(isLoadingMore = false, isSearching = false, sortVal = '') {
+    debugger
+    if (isLoadingMore || sortVal) {
+        if (isLoadingMore) {
+            currentPage++;
+        }
+        else {
+            sortBy = sortVal;
+            currentPage = 1;
+            allCards = [];
+        }
+        moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        tvsUrl = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`
+        personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        favMoviesUrl = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
     }
     if (type === "movies") {
         processPageData('movie', 'poster_path', 'title', 'release_date', isSearching, true);
@@ -147,15 +161,16 @@ function searchKeywoard() {
     return keywoard.toLowerCase().trim();
 }
 
-const search = document.getElementById("search");
+
 search.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
         managePageState(false, true);
     }
-
-
 })
+
+
 document.addEventListener('DOMContentLoaded', function () {
     managePageState();
 });
 
+//next step we want to add sorting and filtring
