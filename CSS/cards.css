@@ -10,8 +10,25 @@
   --nav-bg: rgba(3, 37, 65, 0.8);
   --nav-bg-hover: rgba(3, 37, 65, 0.9);
   --nav-shadow: rgba(3, 37, 65, 0.7);
+  --search-color:black;
   --scroll-track: #3498db59;
   --scroll-thumb: #ff00ff86;
+  --footer-bg: black;
+}
+
+[data-theme="light"] {
+  --primary-color: #3498db;
+  --accent-color: #ff66cc;
+  --hover-color: #00ffff;
+  --bg-color: #eaf6ff;
+  --text-color: #2c3e50;
+  --nav-bg: rgba(230, 240, 255, 0.8);
+  --nav-bg-hover: rgba(230, 240, 255, 0.9);
+  --nav-shadow: rgba(0, 0, 0, 0.1);
+  --search-color:white;
+  --scroll-track: #aed9f0;
+  --scroll-thumb: #ff66cc;
+  --footer-bg: rgb(132, 145, 156);
 }
 
 /* ======================================================
@@ -172,6 +189,8 @@ nav li:hover .dropdown {
   border-radius: 2vw;
   font-size: large;
   padding: 0.5vw 1vw;
+  background-color: var(--text-color);
+  color:var(--search-color);
 }
 
 /* ======================================================
@@ -240,10 +259,14 @@ p:hover {
 
 #loadPage a {
   padding: 1vw 2vw;
-  background-color: #000;
+  background-color: var(--footer-bg);
   border-radius: 2vw;
-  color: var(--hover-color);
+  color: #00ffff;
   margin-top: 0;
+}
+#loadPage a:hover {
+  padding: 2vw;
+  border-radius: 4vw;
 }
 
 /* ======================================================
@@ -295,8 +318,8 @@ ul li {
      Footer
   ====================================================== */
 footer {
-  background-color: #000;
-  color: #fff;
+  background-color: var(--footer-bg);
+  color: var(--text-color);
   padding: 2rem 0;
   text-align: center;
   margin-top: 2rem;
@@ -321,7 +344,7 @@ footer p {
 }
 
 .social-links a {
-  color: #fff;
+  color: var(--text-color);
   font-size: 1.5rem;
   margin: 0 1rem;
   transition: color 0.3s ease;

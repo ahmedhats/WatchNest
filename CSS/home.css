@@ -114,12 +114,6 @@ ul li {
     font-size: 1.5rem;
 }
 
-/* 
-ul li:hover {
-    transform: scale(1.1);
-   
-} */
-
 ul li::after {
     content: "";
     position: absolute;

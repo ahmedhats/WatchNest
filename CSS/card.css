@@ -13,6 +13,18 @@
   --scroll-track: #3498db59;
   --scroll-thumb: #ff00ff86;
 }
+[data-theme="light"] {
+  --primary-color: #3498db;       
+  --accent-color: #ff66cc;
+  --hover-color: #00ffff;
+  --bg-color: #eaf6ff;
+  --text-color: #2c3e50;
+  --nav-bg: rgba(230, 240, 255, 0.8);
+  --nav-bg-hover: rgba(230, 240, 255, 0.9);
+  --nav-shadow: rgba(0, 0, 0, 0.1);
+  --scroll-track: #aed9f0;
+  --scroll-thumb: #ff66cc;
+}
 
 /* ======================================================
      Global Styles

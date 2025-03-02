@@ -16,6 +16,10 @@ const mediaUrl =
 const personUrl = `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}`;
 
 const cardItem = document.getElementById("card");
+const colorModeBtn = document.getElementById("light");
+
+import { applyTheme, toggleTheme } from '../JS/home.js';
+
 
 async function fetchData(url) {
   const response = await fetch(url);
@@ -25,6 +29,8 @@ async function fetchData(url) {
   }
   return await response.json();
 }
+
+applyTheme(localStorage.getItem('theme'));
 
 if (mediaTypes.includes(type)) {
   fetchData(mediaUrl).then(media => {
@@ -78,7 +84,7 @@ if (mediaTypes.includes(type)) {
       cardItem.classList.add("blured");
       let elements = document.getElementsByClassName("overlay");
       elements[0].style.setProperty('background-color', 'rgba(0, 0, 0, 0.97)', 'important');
-    } 
+    }
   });
 }
 else if (personTypes.includes(type)) {
@@ -107,3 +113,7 @@ else if (personTypes.includes(type)) {
     // document.body.style.backgroundImage = `url('https://image.tmdb.org/t/p/w500/${person.profile_path}')`;
   });
 }
+
+colorModeBtn.addEventListener('click', () => {
+  toggleTheme();
+});

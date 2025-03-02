@@ -4,21 +4,33 @@ var sortBy = 'popularity.desc';
 
 const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZDUzZTM3YjA0N2EzMGE4ZTk5MDgxNmQ2ODEzYmZhMyIsIm5iZiI6MTczODA2MTU5MC4yNzEwMDAxLCJzdWIiOiI2Nzk4YjcxNjcwMmY0OTJmNDc4ZjdjZDYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.vX3GiU1-gkhCN-Y4HLuF2SnQI-i6Z1WS0uzbG5n814M';
 
-var moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-var favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-var tvsUrl = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`
-var personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-var favMoviesUrl = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-var TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-var TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+const urls = {
+    movies: `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`,
+    favTvs: `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=${sortBy}`,
+    tvs: `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`,
+    persons: `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`,
+    favMovies: `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=${sortBy}`,
+    TRMovies: `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`,
+    TRTvs: `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`,
+};
+
+// var moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+// var favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+// var tvsUrl = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`
+// var personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+// var favMoviesUrl = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+// var TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+// var TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
 
 const urlParams = new URLSearchParams(window.location.search);
 const type = urlParams.get("type");
 
 const search = document.getElementById("search");
-
+const colorModeBtn = document.getElementById("light");
 
 var allCards = []; // all cards to be rendered will be here 
+
+import { applyTheme, toggleTheme } from '../JS/home.js';
 
 async function fetchResults(url) {//fetching function to get cards from TMDB API 
     try {
@@ -46,7 +58,7 @@ async function fetchResults(url) {//fetching function to get cards from TMDB API
 function processPageData(type, imgPathName, cardTitileName, dateName, isSearching, isBlured) {
     const cardsList = document.getElementById("cards");
     if (!isSearching) {
-        fetchResults(window[`${type}sUrl`]).then(cards => {
+        fetchResults(urls[`${type}s`]).then(cards => {
             if (!cards || cards.length === 0) {
                 console.log(`No ${type} found`);
                 alert(`No ${type} found`)
@@ -114,7 +126,7 @@ function processPageData(type, imgPathName, cardTitileName, dateName, isSearchin
     }
 }
 function managePageState(isLoadingMore = false, isSearching = false, sortVal = '') {
-    debugger
+    applyTheme(localStorage.getItem('theme'));
     if (isLoadingMore || sortVal) {
         if (isLoadingMore) {
             currentPage++;
@@ -124,13 +136,13 @@ function managePageState(isLoadingMore = false, isSearching = false, sortVal = '
             currentPage = 1;
             allCards = [];
         }
-        moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-        favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-        tvsUrl = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`
-        personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-        favMoviesUrl = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-        TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-        TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        urls.movies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        urls.favTvs = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        urls.tvs = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`
+        urls.persons = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        urls.favMovies = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        urls.TRMovies = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        urls.TRTvs = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
     }
     if (type === "movies") {
         processPageData('movie', 'poster_path', 'title', 'release_date', isSearching, true);
@@ -168,9 +180,11 @@ search.addEventListener("keypress", (event) => {
     }
 })
 
+colorModeBtn.addEventListener("click", () => {
+    toggleTheme();
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     managePageState();
 });
 
-//next step we want to add sorting and filtring
