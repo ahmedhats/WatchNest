@@ -59,46 +59,22 @@
           <a href="#" id="sortBtn"><i class="fa fa-sort"></i></a>
           <ul class="dropdown sort-dropdown">
             <li>
-              <a
-                href="#"
-                onclick="managePageState( false, false,'popularity.desc')"
-                >Popularity Descending</a
-              >
+              <a id="populartityD">Popularity Descending</a>
             </li>
             <li>
-              <a
-                href="#"
-                onclick="managePageState( false, false,'popularity.asc')"
-                >Popularity Ascending</a
-              >
+              <a id="populartityA">Popularity Ascending</a>
             </li>
             <li>
-              <a
-                href="#"
-                onclick="managePageState( false, false,'vote_average.desc')"
-                >Rating Descending</a
-              >
+              <a id="ratingD">Rating Descending</a>
             </li>
             <li>
-              <a
-                href="#"
-                onclick="managePageState( false, false,'vote_average.asc')"
-                >Rating Ascending</a
-              >
+              <a id="ratingA">Rating Ascending</a>
             </li>
             <li>
-              <a
-                href="#"
-                onclick="managePageState( false, false,'original_title.desc')"
-                >Name (A-Z)</a
-              >
+              <a id="nameAZ">Name (A-Z)</a>
             </li>
             <li>
-              <a
-                href="#"
-                onclick="managePageState( false, false,'original_title.asc')"
-                >Name (Z-A)</a
-              >
+              <a id="nameZA">Name (Z-A)</a>
             </li>
           </ul>
         </li>
@@ -120,11 +96,10 @@
       <div class="cards-c">
         <div id="cards"></div>
         <div id="loadPage">
-          <a onclick="managePageState(true,false)">Load More</a>
+          <a id="loadMore">Load More</a>
         </div>
       </div>
     </main>
-
     <footer>
       <div class="footer-container">
         <p>Connect with me:</p>

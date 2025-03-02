@@ -14,19 +14,20 @@ const urls = {
     TRTvs: `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`,
 };
 
-// var moviesUrl = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-// var favTvsUrl = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-// var tvsUrl = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`
-// var personsUrl = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-// var favMoviesUrl = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-// var TRMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-// var TRTvsUrl = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
 
 const urlParams = new URLSearchParams(window.location.search);
 const type = urlParams.get("type");
 
 const search = document.getElementById("search");
 const colorModeBtn = document.getElementById("light");
+const LoadMoreBtn = document.getElementById("loadMore");
+
+const populartityD = document.getElementById("populartityD");
+const populartityA = document.getElementById("populartityA");
+const ratingD = document.getElementById("ratingD");
+const ratingA = document.getElementById("ratingA");
+const nameAZ = document.getElementById("nameAZ");
+const nameZA = document.getElementById("nameZA");
 
 var allCards = []; // all cards to be rendered will be here 
 
@@ -103,7 +104,7 @@ function processPageData(type, imgPathName, cardTitileName, dateName, isSearchin
             let popularity = Math.min((card.popularity / 250) * 100, 100);
             carditem.innerHTML += `
             <a href="card.html?id=${card.id}&type=${type}">
-                <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
+                <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" onerror="this.onerror=null; this.src='../IMG/NoImg.jpg';" alt="${card[cardTitileName]}">
             </a>
             <p>${card[cardTitileName]}</p>
             <p id="departmen">${card.known_for_department}<span id="popularity"> ${popularity.toFixed(1)}%</span></p>
@@ -116,7 +117,7 @@ function processPageData(type, imgPathName, cardTitileName, dateName, isSearchin
         else {
             carditem.innerHTML += `
                     <a href="card.html?id=${card.id}&type=${type}">
-                        <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" alt="${card[cardTitileName]}">
+                        <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" onerror="this.onerror=null; this.src='../IMG/NoImg.jpg';" alt="${card[cardTitileName]}">
                     </a>
                     <p>${card[cardTitileName]}</p>
                     <p id="date">${new Date(card[dateName]).toDateString()}</p>  
@@ -173,6 +174,9 @@ function searchKeywoard() {
     return keywoard.toLowerCase().trim();
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    managePageState();
+});
 
 search.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
@@ -184,7 +188,25 @@ colorModeBtn.addEventListener("click", () => {
     toggleTheme();
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    managePageState();
+LoadMoreBtn.addEventListener('click', () => {
+    managePageState(true);
 });
 
+populartityD.addEventListener('click', () => {
+    managePageState(false, false, 'popularity.desc')
+});
+populartityA.addEventListener('click', () => {
+    managePageState(false, false, 'popularity.asc')
+});
+ratingD.addEventListener('click', () => {
+    managePageState(false, false, 'vote_average.desc')
+});
+ratingA.addEventListener('click', () => {
+    managePageState(false, false, 'vote_average.asc')
+});
+nameAZ.addEventListener('click', () => {
+    managePageState(false, false, 'original_title.desc')
+});
+nameZA.addEventListener('click', () => {
+    managePageState(false, false, 'original_title.asc')
+});

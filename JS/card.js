@@ -60,7 +60,7 @@ if (mediaTypes.includes(type)) {
     <div class="overlay"></div>
     <div class="media-content">
     <div class="poster">
-    <img src="${poster}" alt="${title}">
+    <img src="${poster}" onerror="this.onerror=null; this.src='../IMG/NoImg.jpg';" alt="${title}">
     <div class="popularity">
     <div class="circular-progress" style="--percentage: ${computedScore};">
     <span>${computedScore}%</span>
@@ -94,7 +94,7 @@ else if (personTypes.includes(type)) {
       <div class="person-details">
         <div class="person-content">
           <div class="profile">
-            <img src="https://image.tmdb.org/t/p/w500/${person.profile_path}" alt="${person.name}">
+            <img src="https://image.tmdb.org/t/p/w500/${person.profile_path}" onerror="this.onerror=null; this.src='../IMG/NoImg.jpg';" alt="${person.name}">
           </div>
           <div class="person-info">
             <h1 class="title">${person.name}</h1>
