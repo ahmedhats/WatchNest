@@ -1,19 +1,22 @@
 var currentPage = new Number(1);
 var sortBy = 'vote_average.desc';
+var filterBy = '';
 // popularity.desc  popularity.asc  vote_average.desc  vote_average.asc   original_title.desc   original_title.asc
 
 const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZDUzZTM3YjA0N2EzMGE4ZTk5MDgxNmQ2ODEzYmZhMyIsIm5iZiI6MTczODA2MTU5MC4yNzEwMDAxLCJzdWIiOiI2Nzk4YjcxNjcwMmY0OTJmNDc4ZjdjZDYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.vX3GiU1-gkhCN-Y4HLuF2SnQI-i6Z1WS0uzbG5n814M';
 
 const urls = {
-    movies: `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`,
+    movies: `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}&with_genres=${filterBy}`,
     popMovies: `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${currentPage}`,
     TRMovies: `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`,
     favMovies: `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}`,
-    tvs: `https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`,
+    tvs: `https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}&with_genres=${filterBy}`,
     popTvs: `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}`,
     TRTvs: `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`,
     favTvs: `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}`,
     persons: `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`,
+    // https://api.themoviedb.org/3/search/person?api_key=Y&query=John&include_adult=false
+
 };
 
 
@@ -25,12 +28,24 @@ const colorModeBtn = document.getElementById("light");
 const LoadMoreBtn = document.getElementById("loadMore");
 
 const sortList = document.getElementById("sort-dropdown");
+const sortAnchorTag = document.getElementById("sortBtn");
 const populartityD = document.getElementById("populartityD");
 const populartityA = document.getElementById("populartityA");
 const ratingD = document.getElementById("ratingD");
 const ratingA = document.getElementById("ratingA");
 const nameAZ = document.getElementById("nameAZ");
 const nameZA = document.getElementById("nameZA");
+
+const filterList = document.getElementById("filter-dropdown");
+const filterAnchorTag = document.getElementById("filterBtn");
+const allG = document.getElementById("allG");
+const action = document.getElementById("action");
+const animation = document.getElementById("animation");
+const comedy = document.getElementById("comedy");
+const drama = document.getElementById("drama");
+const crime = document.getElementById("crime");
+const fantasy = document.getElementById("fantasy");
+const family = document.getElementById("family");
 
 var allCards = []; // all cards to be rendered will be here 
 
@@ -130,26 +145,25 @@ function processPageData(type, imgPathName, cardTitileName, dateName, isSearchin
         cardsList.appendChild(carditem);
     }
 }
-function managePageState(isLoadingMore = false, isSearching = false, sortVal = '') {
+function managePageState(isLoadingMore = false, isSearching = false, isSorting = false, isFiltering = false) {
     applyTheme(localStorage.getItem('theme'));
-    if (isLoadingMore || sortVal) {
+    if (isLoadingMore || isSorting || isFiltering) {
         if (isLoadingMore) {
             currentPage++;
         }
         else {
-            sortBy = sortVal;
             currentPage = 1;
             allCards = [];
         }
-        urls.movies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-        popMovies = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${currentPage}`;
-        urls.favTvs = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-        urls.tvs = `https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-        popTvs = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}`;
-        urls.persons = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-        urls.favMovies = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-        urls.TRMovies = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
-        urls.TRTvs = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}&sort_by=${sortBy}`;
+        urls.movies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}&with_genres=${filterBy}`;
+        urls.popMovies = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${currentPage}`;
+        urls.favTvs = `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}`;
+        urls.tvs = `https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortBy}&with_genres=${filterBy}`;
+        urls.popTvs = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}`;
+        urls.persons = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`;
+        urls.favMovies = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}`;
+        urls.TRMovies = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`;
+        urls.TRTvs = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`;
     }
     // if (type.includes('ovies')) {
     //     processPageData(type.slice(0, -1), 'poster_path', 'title', 'release_date', isSearching, true);
@@ -163,39 +177,48 @@ function managePageState(isLoadingMore = false, isSearching = false, sortVal = '
     }
     else if (type === "popMovies") {
         processPageData('movie', 'poster_path', 'title', 'release_date', isSearching, true);
+        noSortFilter()
     }
     else if (type === "favMovies") {
         processPageData('favMovie', 'poster_path', 'title', 'release_date', isSearching, false);
-        sortList.style.display = 'none';
+        noSortFilter()
     }
     else if (type === "TRMovies") {
         processPageData('TRMovie', 'poster_path', 'title', 'release_date', isSearching, true);
-        sortList.style.display = 'none';
+        noSortFilter()
     }
     else if (type === "tvs") {
         processPageData('tv', 'poster_path', 'name', 'first_air_date', isSearching, true);
     }
     else if (type === "popTvs") {
         processPageData('tv', 'poster_path', 'name', 'first_air_date', isSearching, true);
+        noSortFilter()
     }
     else if (type === "favTvs") {
         processPageData('favTv', 'poster_path', 'name', 'first_air_date', isSearching, false);
-        sortList.style.display = 'none';
+        noSortFilter()
     }
     else if (type === "TRTvs") {
         processPageData('TRTv', 'poster_path', 'name', 'first_air_date', isSearching, true);
-        sortList.style.display = 'none';
+        noSortFilter()
     }
 
     else if (type === "persons") {
         processPageData('person', 'profile_path', 'name', 'known_for_department', isSearching, false);
-        sortList.style.display = 'none';
+        noSortFilter()
     }
 }
 function searchKeywoard() {
     const searchItem = document.getElementById("search");
     const keywoard = searchItem.value;
     return keywoard.toLowerCase().trim();
+}
+
+function noSortFilter() {
+    sortAnchorTag.title = 'sorting is only available in discover section :(';
+    filterAnchorTag.title = 'filtering is only available in discover section :(';
+    sortList.remove();
+    filterList.remove();
 }
 
 window.addEventListener('load', () => {
@@ -224,30 +247,70 @@ LoadMoreBtn.addEventListener('click', () => {
 
 
 populartityD.addEventListener('click', () => {
-    managePageState(false, false, 'popularity.desc')
+    sortBy = 'popularity.desc';
+    managePageState(false, false, true)
 });
 populartityA.addEventListener('click', () => {
-    managePageState(false, false, 'popularity.asc')
+    sortBy = 'popularity.asc';
+    managePageState(false, false, true)
 });
 ratingD.addEventListener('click', () => {
-    managePageState(false, false, 'vote_average.desc')
+    sortBy = 'vote_average.desc';
+    managePageState(false, false, true)
 });
 ratingA.addEventListener('click', () => {
-    managePageState(false, false, 'vote_average.asc')
+    sortBy = 'vote_average.asc';
+    managePageState(false, false, true)
 });
 nameAZ.addEventListener('click', () => {
-    if (type === 'movies') {
-        managePageState(false, false, 'original_title.desc')
+    if (type === 'movies' || type === 'tvs') {
+        sortBy = 'original_title.desc';
+        managePageState(false, false, true)
     }
     else {
         //sorting logic
     }
 });
 nameZA.addEventListener('click', () => {
-    if (type === 'movies') {
-        managePageState(false, false, 'original_title.asc')
+    if (type === 'movies' || type === 'tvs') {
+        sortBy = 'original_title.asc';
+        managePageState(false, false, true)
     }
     else {
         //reversed sorting logic
     }
 });
+
+allG.addEventListener('click', () => {
+    filterBy = '';
+    managePageState(false, false, false, true);
+});
+action.addEventListener('click', () => {
+    filterBy = '10759';
+    managePageState(false, false, false, true);
+});
+animation.addEventListener('click', () => {
+    filterBy = '16';
+    managePageState(false, false, false, true);
+});
+comedy.addEventListener('click', () => {
+    filterBy = '35';
+    managePageState(false, false, false, true);
+});
+drama.addEventListener('click', () => {
+    filterBy = '18';
+    managePageState(false, false, false, true);
+});
+crime.addEventListener('click', () => {
+    filterBy = '80';
+    managePageState(false, false, false, true);
+});
+fantasy.addEventListener('click', () => {
+    filterBy = '10765';
+    managePageState(false, false, false, true);
+});
+family.addEventListener('click', () => {
+    filterBy = '10751';
+    managePageState(false, false, false, true);
+});
+

@@ -48,13 +48,15 @@
         </li>
         <li>
           <a href="#" id="filterBtn"><i class="fa fa-filter"></i></a>
-          <ul class="dropdown filter-dropdown">
-            <li><a href="#">All Genres</a></li>
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Comedy</a></li>
-            <li><a href="#">Drama</a></li>
-            <li><a href="#">Thriller</a></li>
-            <li><a href="#">Romance</a></li>
+          <ul class="dropdown filter-dropdown" id="filter-dropdown">
+            <li id="allG"><a>All Genres</a></li>
+            <li id="action"><a>Action</a></li>
+            <li id="animation"><a>Animation</a></li>
+            <li id="comedy"><a>Comedy</a></li>
+            <li id="drama"><a>Drama</a></li>
+            <li id="crime"><a>Crime</a></li>
+            <li id="fantasy"><a>Fantasy</a></li>
+            <li id="family"><a>Family</a></li>
           </ul>
         </li>
         <li>
@@ -93,15 +95,10 @@
         </li>
       </ul>
     </nav>
-
-    <main>
-      <div class="cards-c">
-        <div id="cards"></div>
-        <div id="loadPage">
-          <a id="loadMore">Load More</a>
-        </div>
-      </div>
-    </main>
+    <div id="cards"></div>
+    <div id="loadPage">
+      <a id="loadMore">Load More</a>
+    </div>
     <footer>
       <div class="footer-container">
         <p>Connect with me:</p>
