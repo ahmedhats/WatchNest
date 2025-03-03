@@ -1,3 +1,4 @@
+import { getCookie } from '../JS/auth.js';
 const colorModeBtn = document.getElementById("light");
 export function applyTheme(theme) {
     const root = document.documentElement;
@@ -16,4 +17,11 @@ export function toggleTheme() {
     //toggle the theme
     localStorage.setItem('theme', newTheme);
     applyTheme(newTheme);
+}
+if (window.location.pathname.includes('home.html')) {
+window.addEventListener('load', () => {
+    if (getCookie('loggedIn') !== 'true') {
+        window.location.href = '../HTML/index.html';// Redirect to home page if cookie found to be looged in :)
+    }
+});
 }

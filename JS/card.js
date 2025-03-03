@@ -19,6 +19,7 @@ const cardItem = document.getElementById("card");
 const colorModeBtn = document.getElementById("light");
 
 import { applyTheme, toggleTheme } from '../JS/home.js';
+import { getCookie } from '../JS/auth.js';
 
 
 async function fetchData(url) {
@@ -29,6 +30,12 @@ async function fetchData(url) {
   }
   return await response.json();
 }
+
+window.addEventListener('load', () => {
+  if (getCookie('loggedIn') !== 'true') {
+    window.location.href = '../HTML/index.html';// Redirect to home page if cookie found to be looged in :)
+  }
+});
 
 applyTheme(localStorage.getItem('theme'));
 
