@@ -13,8 +13,9 @@
   --scroll-track: #3498db59;
   --scroll-thumb: #ff00ff86;
 }
+
 [data-theme="light"] {
-  --primary-color: #3498db;       
+  --primary-color: #3498db;
   --accent-color: #ff66cc;
   --hover-color: #00ffff;
   --bg-color: #eaf6ff;
@@ -44,7 +45,7 @@ body {
   color: var(--text-color);
   font-family: Arial, sans-serif;
   overflow-x: hidden;
-  position: relative; 
+  position: relative;
 }
 
 body::before {
@@ -62,9 +63,11 @@ body::before {
 body::-webkit-scrollbar {
   width: 0.5rem;
 }
+
 body::-webkit-scrollbar-track {
   background: var(--scroll-track);
 }
+
 body::-webkit-scrollbar-thumb {
   background: var(--scroll-thumb);
 }
@@ -75,12 +78,14 @@ body::-webkit-scrollbar-thumb {
   flex-wrap: wrap;
   gap: 2.3vw;
 }
+
 a,
 i {
   color: var(--text-color);
   text-decoration: none;
   transition: 0.3s ease-in-out;
 }
+
 a:hover,
 i:hover {
   color: var(--primary-color);
@@ -179,6 +184,7 @@ ul li:hover::after {
   padding-left: 2vw;
   position: relative;
 }
+
 #right-nav {
   display: flex;
   align-items: center;
@@ -368,13 +374,17 @@ ul li:hover::after {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-img, p, ul li, .card {
+img,
+p,
+ul li,
+.card {
   animation: fadeIn 1s ease-in-out;
 }
 
@@ -400,6 +410,7 @@ img, p, ul li, .card {
     font-size: 1.2rem;
   }
 }
+
 /* ======================================================
      Animations
 ====================================================== */
@@ -408,6 +419,7 @@ img, p, ul li, .card {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -419,16 +431,16 @@ img, p, ul li, .card {
 }
 
 .blured-bg::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    background-color: var(--overlay-bg, rgba(0, 0, 0, 0.9));
-    z-index: 1;
-  
- 
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: var(--overlay-bg, rgba(0, 0, 0, 0.9));
+  z-index: 1;
+
+
 }
 
 .card,
@@ -485,37 +497,39 @@ footer p {
     font-size: 4vw;
     height: 10vw;
   }
-  
+
   p {
     font-size: 0.8rem;
   }
-  
+
   ul li {
     font-size: 1rem;
   }
-  
+
   .movie-content {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  
+
   .movie-content .poster {
     max-width: 80%;
   }
-  
+
   .movie-content .details .title {
     font-size: 2rem;
   }
-  
+
   .movie-content .details .tagline {
     font-size: 1.2rem;
   }
 }
+
 @media (max-width: 725px) {
   ul {
     margin: 0;
   }
+
   nav {
     font-size: 6vw;
     height: 15vw;
@@ -523,21 +537,27 @@ footer p {
     justify-content: center;
     gap: 3vw;
   }
+
   #right-nav {
     /* justify-content: space-around; */
     display: none;
 
   }
+
   #left-nav {
     display: flex;
     justify-content: space-around;
+    padding: 0;
   }
-  #left-nav a{
+
+  #left-nav a {
     font-size: 4.5vw;
   }
+
   .icons {
     padding-left: 2vw;
   }
+
   ul {
     width: 100%;
   }

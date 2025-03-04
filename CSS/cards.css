@@ -10,7 +10,7 @@
   --nav-bg: rgba(3, 37, 65, 0.8);
   --nav-bg-hover: rgba(3, 37, 65, 0.9);
   --nav-shadow: rgba(3, 37, 65, 0.7);
-  --search-color:black;
+  --search-color: black;
   --scroll-track: #3498db59;
   --scroll-thumb: #ff00ff86;
   --footer-bg: black;
@@ -25,7 +25,7 @@
   --nav-bg: rgba(230, 240, 255, 0.8);
   --nav-bg-hover: rgba(230, 240, 255, 0.9);
   --nav-shadow: rgba(0, 0, 0, 0.1);
-  --search-color:white;
+  --search-color: white;
   --scroll-track: #aed9f0;
   --scroll-thumb: #ff66cc;
   --footer-bg: rgb(132, 145, 156);
@@ -190,7 +190,7 @@ nav li:hover .dropdown {
   font-size: large;
   padding: 0.5vw 1vw;
   background-color: var(--text-color);
-  color:var(--search-color);
+  color: var(--search-color);
 }
 
 /* ======================================================
@@ -264,6 +264,7 @@ p:hover {
   color: #00ffff;
   margin-top: 0;
 }
+
 #loadPage a:hover {
   padding: 2vw;
   border-radius: 4vw;
@@ -407,5 +408,37 @@ footer p {
 
   ul {
     width: 100%;
+  }
+}
+
+@media (max-width: 450px) {
+  #right-nav {
+    width: 95%;
+    padding: 1.5vw 0 0 0;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  #left-nav {
+    width: 97%;
+    padding: 0 0 1.5vw 0;
+  }
+
+  p {
+    font-size: 2.8vw;
+  }
+
+  a {
+    font-size: 5vw;
+  }
+
+  .fa-filter,
+  .fa-sort,
+  .fa-user-circle {
+    display: none;
+  }
+
+  #search {
+    width: 70vw;
   }
 }

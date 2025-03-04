@@ -396,8 +396,7 @@ footer p {
     }
 
     nav {
-        padding: 2vw 0 0 0  ;
-        font-size: 6vw;
+        padding: 2vw 0 0 0;
         height: 15vw;
         flex-direction: column-reverse;
         justify-content: center;
@@ -407,7 +406,7 @@ footer p {
     ul {
         display: flex;
         justify-content: space-around;
-        width: 100%;
+        width: 90%;
     }
 
     .backdrops {
@@ -419,4 +418,26 @@ footer p {
     }
 
 
+}
+
+@media (max-width: 450px) {
+    .section2-container{
+        padding: 0 4vw;
+    }
+    div.content{
+        padding: 0 2vw;
+    }
+    #right-nav{
+        display: none;
+    }
+    #left-nav{
+        padding: 0;
+    }
+    a{
+        font-size: 5vw;
+    }
+    ul{
+        justify-content: space-between;
+        width: 97%;
+    }
 }

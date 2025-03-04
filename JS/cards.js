@@ -314,3 +314,4 @@ family.addEventListener('click', () => {
     managePageState(false, false, false, true);
 });
 
+//light mode in home sorting a-z for other types cleaning the code 
