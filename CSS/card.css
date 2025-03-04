@@ -106,6 +106,7 @@ nav {
   width: 100%;
   top: 0;
   z-index: 10;
+  transition: top 0.3s ease-in-out;
 }
 
 ul {

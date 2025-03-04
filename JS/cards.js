@@ -1,4 +1,6 @@
 var currentPage = new Number(1);
+let lastScrollTop = 0;
+const navbar = document.getElementById("nav");
 var sortBy = 'vote_average.desc';
 var filterBy = '';
 // popularity.desc  popularity.asc  vote_average.desc  vote_average.asc   original_title.desc   original_title.asc
@@ -314,4 +316,14 @@ family.addEventListener('click', () => {
     managePageState(false, false, false, true);
 });
 
-//light mode in home sorting a-z for other types cleaning the code 
+window.addEventListener("scroll", function () {
+    let scrollTop = window.scrollY;
+
+    if (scrollTop > lastScrollTop) {
+        navbar.style.top = "-150px";
+    } else {
+        navbar.style.top = "0";
+    }
+    lastScrollTop = scrollTop;
+});
+// sorting a-z for other types cleaning the code 

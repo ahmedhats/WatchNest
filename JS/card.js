@@ -1,3 +1,6 @@
+let lastScrollTop = 0;
+const navbar = document.getElementById("nav");
+
 const apiKey = '2d53e37b047a30a8e990816d6813bfa3';
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -123,4 +126,15 @@ else if (personTypes.includes(type)) {
 
 colorModeBtn.addEventListener('click', () => {
   toggleTheme();
+});
+
+window.addEventListener("scroll", function () {
+  let scrollTop = window.scrollY;
+
+  if (scrollTop > lastScrollTop) {
+    navbar.style.top = "-150px";
+  } else {
+    navbar.style.top = "0";
+  }
+  lastScrollTop = scrollTop;
 });
