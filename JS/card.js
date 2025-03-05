@@ -120,30 +120,7 @@ function renderMedia() {
     }
   });
 }
-function renderPerson() {
-  fetchData(personUrl).then(person => {
-    cardItem.innerHTML = `
-      <div class="person-details">
-        <div class="person-content">
-          <div class="profile">
-            <img src="https://image.tmdb.org/t/p/w500/${person.profile_path}" onerror="this.onerror=null; this.src='../IMG/NoImg.jpg';" alt="${person.name}">
-          </div>
-          <div class="person-info">
-            <h1 class="title">${person.name}</h1>
-            <p class="biography">${person.biography}</p>
-            <ul class="person-details-list">
-              ${person.birthday ? `<li><strong>Birthday:</strong> ${person.birthday}</li>` : ""}
-              ${person.place_of_birth ? `<li><strong>Place of Birth:</strong> ${person.place_of_birth}</li>` : ""}
-              ${person.known_for_department ? `<li><strong>Department:</strong> ${person.known_for_department}</li>` : ""}
-              ${person.also_known_as && person.also_known_as.length ? `<li><strong>Also Known As:</strong> ${person.also_known_as.join(", ")}</li>` : ""}
-            </ul>
-            <p class="popularity"><strong>Popularity:</strong> ${person.popularity}</p>
-          </div>
-        </div>
-      </div>
-    `;
-  });
-}
+
 function renderPage() {
   window.addEventListener('load', () => {
     if (getCookie('loggedIn') !== 'true') {
@@ -173,5 +150,32 @@ function renderPage() {
   });
 }
 
+function renderPerson() {
+  fetchData(personUrl).then(person => {
+    cardItem.innerHTML = `
+      <div class="person-details">
+        <div class="person-content">
+          <div class="profile">
+            <img src="https://image.tmdb.org/t/p/w500/${person.profile_path}" onerror="this.onerror=null; this.src='../IMG/NoImg.jpg';" alt="${person.name}">
+          </div>
+          <div class="person-info">
+            <h1 class="title">${person.name}</h1>
+            <p class="biography">${person.biography}</p>
+            <ul class="person-details-list">
+              ${person.birthday ? `<li><strong>Birthday:</strong> ${person.birthday}</li>` : ""}
+              ${person.place_of_birth ? `<li><strong>Place of Birth:</strong> ${person.place_of_birth}</li>` : ""}
+              ${person.known_for_department ? `<li><strong>Department:</strong> ${person.known_for_department}</li>` : ""}
+              ${person.also_known_as && person.also_known_as.length ? `<li><strong>Also Known As:</strong> ${person.also_known_as.join(", ")}</li>` : ""}
+            </ul>
+            <p class="popularity"><strong>Popularity:</strong> ${person.popularity}</p>
+          </div>
+        </div>
+      </div>
+    `;
+    if (person.gender === 1) {//it's not possible to get here but just for case of any errors
+      cardItem.classList.add("blured");
+    }
+  });
+}
 
 renderPage();

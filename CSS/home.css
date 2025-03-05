@@ -351,7 +351,7 @@ ul li {
     margin-bottom: 2rem;
 }
 
-#searchInput{
+#searchInput {
     padding: 0.8rem 1.2rem;
     border: none;
     border-radius: 5px;
@@ -359,7 +359,7 @@ ul li {
     color: var(--body-text);
 }
 
-#searchIcon{
+#searchIcon {
     cursor: pointer;
     font-size: 1.5rem;
 }
