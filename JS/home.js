@@ -43,3 +43,6 @@ if (window.location.pathname.includes('home.html')) {
         lastScrollTop = scrollTop;
     });
 }
+
+
+// https://api.themoviedb.org/3/search/multi?api_key=YOUR_API_KEY&query=YOUR_QUERY

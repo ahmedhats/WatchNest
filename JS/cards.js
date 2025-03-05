@@ -3,6 +3,7 @@ let lastScrollTop = 0;
 const navbar = document.getElementById("nav");
 var sortBy = 'vote_average.desc';
 var filterBy = '';
+var searchQuery = '';
 // popularity.desc  popularity.asc  vote_average.desc  vote_average.asc   original_title.desc   original_title.asc
 
 const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZDUzZTM3YjA0N2EzMGE4ZTk5MDgxNmQ2ODEzYmZhMyIsIm5iZiI6MTczODA2MTU5MC4yNzEwMDAxLCJzdWIiOiI2Nzk4YjcxNjcwMmY0OTJmNDc4ZjdjZDYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.vX3GiU1-gkhCN-Y4HLuF2SnQI-i6Z1WS0uzbG5n814M';
@@ -17,7 +18,11 @@ const urls = {
     TRTvs: `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`,
     favTvs: `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}`,
     persons: `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`,
-    // https://api.themoviedb.org/3/search/person?api_key=Y&query=John&include_adult=false
+
+    searchMovies: `https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=${currentPage}&query=${searchQuery}`,
+    searchTV: `https://api.themoviedb.org/3/search/tv?language=en-US&page=${currentPage}&query=${searchQuery}`,
+    searchPersons: `https://api.themoviedb.org/3/search/person?language=en-US&page=${currentPage}&query=${searchQuery}`
+    //links for searching the whole database
 
 };
 
@@ -128,11 +133,7 @@ function processPageData(type, imgPathName, cardTitileName, dateName, isSearchin
                 <img src="https://image.tmdb.org/t/p/w500/${card[imgPathName]}" onerror="this.onerror=null; this.src='../IMG/NoImg.jpg';" alt="${card[cardTitileName]}">
             </a>
             <p>${card[cardTitileName]}</p>
-            <p id="departmen">${card.known_for_department}<span id="popularity"> ${popularity.toFixed(1)}%</span></p>
-            <div class="popularity-bar">
-            <div class="popularity-container">
-            <div class="popularity-bar"></div>
-            </div>
+            <p id="departmen">Dept:${card.known_for_department}<span id="popularity"> / popularity: ${popularity.toFixed(1)}%</span></p>
             `;
         }
         else {
@@ -167,13 +168,7 @@ function managePageState(isLoadingMore = false, isSearching = false, isSorting =
         urls.TRMovies = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`;
         urls.TRTvs = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`;
     }
-    // if (type.includes('ovies')) {
-    //     processPageData(type.slice(0, -1), 'poster_path', 'title', 'release_date', isSearching, true);
-    // }
-    // else {
-    //     processPageData(type.slice(0, -1), 'poster_path', 'name', 'first_air_date', isSearching, false);
 
-    // }
     if (type === "movies") {
         processPageData('movie', 'poster_path', 'title', 'release_date', isSearching, true);
     }
@@ -223,107 +218,110 @@ function noSortFilter() {
     filterList.remove();
 }
 
-window.addEventListener('load', () => {
-    if (getCookie('loggedIn') !== 'true') {
-        window.location.href = '../HTML/index.html';// Redirect to home page if cookie found to be looged in :)
-    }
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-    managePageState();
-});
+function renderPage() {
+    window.addEventListener('load', () => {
+        if (getCookie('loggedIn') !== 'true') {
+            window.location.href = '../HTML/index.html';// Redirect to home page if cookie found to be looged in :)
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        managePageState();
+    });
 
-search.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-        managePageState(false, true);
-    }
-})
+    search.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+            managePageState(false, true);
+        }
+    })
 
-colorModeBtn.addEventListener("click", () => {
-    toggleTheme();
-});
+    colorModeBtn.addEventListener("click", () => {
+        toggleTheme();
+    });
 
-LoadMoreBtn.addEventListener('click', () => {
-    managePageState(true);
-});
+    LoadMoreBtn.addEventListener('click', () => {
+        managePageState(true);
+    });
 
 
-populartityD.addEventListener('click', () => {
-    sortBy = 'popularity.desc';
-    managePageState(false, false, true)
-});
-populartityA.addEventListener('click', () => {
-    sortBy = 'popularity.asc';
-    managePageState(false, false, true)
-});
-ratingD.addEventListener('click', () => {
-    sortBy = 'vote_average.desc';
-    managePageState(false, false, true)
-});
-ratingA.addEventListener('click', () => {
-    sortBy = 'vote_average.asc';
-    managePageState(false, false, true)
-});
-nameAZ.addEventListener('click', () => {
-    if (type === 'movies' || type === 'tvs') {
-        sortBy = 'original_title.desc';
+    populartityD.addEventListener('click', () => {
+        sortBy = 'popularity.desc';
         managePageState(false, false, true)
-    }
-    else {
-        //sorting logic
-    }
-});
-nameZA.addEventListener('click', () => {
-    if (type === 'movies' || type === 'tvs') {
-        sortBy = 'original_title.asc';
+    });
+    populartityA.addEventListener('click', () => {
+        sortBy = 'popularity.asc';
         managePageState(false, false, true)
-    }
-    else {
-        //reversed sorting logic
-    }
-});
+    });
+    ratingD.addEventListener('click', () => {
+        sortBy = 'vote_average.desc';
+        managePageState(false, false, true)
+    });
+    ratingA.addEventListener('click', () => {
+        sortBy = 'vote_average.asc';
+        managePageState(false, false, true)
+    });
+    nameAZ.addEventListener('click', () => {
+        if (type === 'movies' || type === 'tvs') {
+            sortBy = 'original_title.desc';
+            managePageState(false, false, true)
+        }
+        else {
+            //sorting logic
+        }
+    });
+    nameZA.addEventListener('click', () => {
+        if (type === 'movies' || type === 'tvs') {
+            sortBy = 'original_title.asc';
+            managePageState(false, false, true)
+        }
+        else {
+            //reversed sorting logic
+        }
+    });
 
-allG.addEventListener('click', () => {
-    filterBy = '';
-    managePageState(false, false, false, true);
-});
-action.addEventListener('click', () => {
-    filterBy = '10759';
-    managePageState(false, false, false, true);
-});
-animation.addEventListener('click', () => {
-    filterBy = '16';
-    managePageState(false, false, false, true);
-});
-comedy.addEventListener('click', () => {
-    filterBy = '35';
-    managePageState(false, false, false, true);
-});
-drama.addEventListener('click', () => {
-    filterBy = '18';
-    managePageState(false, false, false, true);
-});
-crime.addEventListener('click', () => {
-    filterBy = '80';
-    managePageState(false, false, false, true);
-});
-fantasy.addEventListener('click', () => {
-    filterBy = '10765';
-    managePageState(false, false, false, true);
-});
-family.addEventListener('click', () => {
-    filterBy = '10751';
-    managePageState(false, false, false, true);
-});
+    allG.addEventListener('click', () => {
+        filterBy = '';
+        managePageState(false, false, false, true);
+    });
+    action.addEventListener('click', () => {
+        filterBy = '10759';
+        managePageState(false, false, false, true);
+    });
+    animation.addEventListener('click', () => {
+        filterBy = '16';
+        managePageState(false, false, false, true);
+    });
+    comedy.addEventListener('click', () => {
+        filterBy = '35';
+        managePageState(false, false, false, true);
+    });
+    drama.addEventListener('click', () => {
+        filterBy = '18';
+        managePageState(false, false, false, true);
+    });
+    crime.addEventListener('click', () => {
+        filterBy = '80';
+        managePageState(false, false, false, true);
+    });
+    fantasy.addEventListener('click', () => {
+        filterBy = '10765';
+        managePageState(false, false, false, true);
+    });
+    family.addEventListener('click', () => {
+        filterBy = '10751';
+        managePageState(false, false, false, true);
+    });
 
-window.addEventListener("scroll", function () {
-    let scrollTop = window.scrollY;
+    window.addEventListener("scroll", function () {
+        let scrollTop = window.scrollY;
 
-    if (scrollTop > lastScrollTop) {
-        navbar.style.top = "-150px";
-    } else {
-        navbar.style.top = "0";
-    }
-    lastScrollTop = scrollTop;
-});
+        if (scrollTop > lastScrollTop) {
+            navbar.style.top = "-150px";
+        } else {
+            navbar.style.top = "0";
+        }
+        lastScrollTop = scrollTop;
+    });
+}
+renderPage();
 // sorting a-z for other types cleaning the code 

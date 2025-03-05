@@ -1,5 +1,3 @@
-let lastScrollTop = 0;
-const navbar = document.getElementById("nav");
 
 const apiKey = '2d53e37b047a30a8e990816d6813bfa3';
 
@@ -18,12 +16,13 @@ const mediaUrl =
 
 const personUrl = `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}`;
 
+let lastScrollTop = 0;
+const navbar = document.getElementById("nav");
 const cardItem = document.getElementById("card");
 const colorModeBtn = document.getElementById("light");
 
 import { applyTheme, toggleTheme } from '../JS/home.js';
 import { getCookie } from '../JS/auth.js';
-
 
 async function fetchData(url) {
   const response = await fetch(url);
@@ -34,15 +33,7 @@ async function fetchData(url) {
   return await response.json();
 }
 
-window.addEventListener('load', () => {
-  if (getCookie('loggedIn') !== 'true') {
-    window.location.href = '../HTML/index.html';// Redirect to home page if cookie found to be looged in :)
-  }
-});
-
-applyTheme(localStorage.getItem('theme'));
-
-if (mediaTypes.includes(type)) {
+function renderMedia() {
   fetchData(mediaUrl).then(media => {
     console.log(media);
     // Use movie.title or tv.name basen on valdity 
@@ -93,13 +84,12 @@ if (mediaTypes.includes(type)) {
     if (!(type.includes("fav"))) {
       cardItem.classList.add("blured");
       let elements = document.getElementsByClassName("overlay");
-      elements[0].style.setProperty('background-color', 'rgba(0, 0, 0, 0.97)', 'important');
+      elements[0].style.setProperty('background-color', 'var(--overlay-color)', 'important');
     }
   });
 }
-else if (personTypes.includes(type)) {
+function renderPerson() {
   fetchData(personUrl).then(person => {
-    console.log(person);
     cardItem.innerHTML = `
       <div class="person-details">
         <div class="person-content">
@@ -120,21 +110,36 @@ else if (personTypes.includes(type)) {
         </div>
       </div>
     `;
-    // document.body.style.backgroundImage = `url('https://image.tmdb.org/t/p/w500/${person.profile_path}')`;
+  });
+}
+function renderPage() {
+  window.addEventListener('load', () => {
+    if (getCookie('loggedIn') !== 'true') {
+      window.location.href = '../HTML/index.html';// Redirect to home page if cookie found to be looged in :)
+    }
+  });
+  if (mediaTypes.includes(type)) {
+    renderMedia()
+  }
+  else if (personTypes.includes(type)) {
+    renderPerson()
+  }
+  applyTheme(localStorage.getItem('theme'));
+  colorModeBtn.addEventListener('click', () => {
+    toggleTheme();
+  });
+
+  window.addEventListener("scroll", function () {
+    let scrollTop = window.scrollY;
+
+    if (scrollTop > lastScrollTop) {
+      navbar.style.top = "-150px";
+    } else {
+      navbar.style.top = "0";
+    }
+    lastScrollTop = scrollTop;
   });
 }
 
-colorModeBtn.addEventListener('click', () => {
-  toggleTheme();
-});
 
-window.addEventListener("scroll", function () {
-  let scrollTop = window.scrollY;
-
-  if (scrollTop > lastScrollTop) {
-    navbar.style.top = "-150px";
-  } else {
-    navbar.style.top = "0";
-  }
-  lastScrollTop = scrollTop;
-});
+renderPage();
