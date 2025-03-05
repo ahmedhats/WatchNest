@@ -43,7 +43,7 @@
       </ul>
       <ul id="right-nav">
         <li>
-          <a ><i class="fa fa-sun" id="light"></i></a>
+          <a><i class="fa fa-sun" id="light"></i></a>
         </li>
         <li>
           <a href="#"><i class="fas fa-globe"></i></a>
@@ -73,8 +73,18 @@
     <section id="section2">
       <div class="section2-container">
         <h2>Discover More</h2>
-        <p>Check out my favorite movies, TV series, and popular persons.</p>
+        <p>Search the entire DB or check out my favorite movies, TV series, and popular persons.</p>
         <div class="cards-container">
+          <div class="card" id="searchDB">
+            <h3>Search the DB</h3>
+            <p>search for media, actors and companies</p>
+            <input 
+              id="searchInput"
+              type="text"
+              placeholder="Search any thing"
+            />
+            <i class="fas fa-search" id="searchIcon"></i>
+          </div>
           <div class="card">
             <h3>Favorite Movies</h3>
             <p>Explore a hand-picked selection of top movies.</p>
@@ -95,6 +105,7 @@
         </div>
       </div>
     </section>
+    <div class="globalSearch"></div>
     <footer>
       <div class="footer-container">
         <p>Connect with me:</p>
