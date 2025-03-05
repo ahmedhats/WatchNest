@@ -6,13 +6,13 @@
   --accent-color: #ff00ff86;
   --hover-color: #00ffff;
   --bg-color: #010a19;
-  --overlay-color:rgba(0, 0, 0, 0.97);
+  --overlay-color: rgba(0, 0, 0, 0.97);
   --text-color: #fff;
-  --mainText-color:white;
+  --mainText-color: white;
   --nav-bg: rgba(3, 37, 65, 0.8);
   --nav-bg-hover: rgba(3, 37, 65, 0.9);
   --nav-shadow: rgba(3, 37, 65, 0.7);
-  --footer-bg:black;
+  --footer-bg: black;
   --scroll-track: #3498db59;
   --scroll-thumb: #ff00ff86;
 }
@@ -21,10 +21,10 @@
   --primary-color: #3498db;
   --accent-color: #ff66cc;
   --hover-color: #00ffff;
-  --bg-color: #d7ebfb;  
-  --overlay-color:rgba(16, 17, 17, 1);
+  --bg-color: #d7ebfb;
+  --overlay-color: rgba(16, 17, 17, 1);
   --text-color: #2c3e50;
-  --mainText-color:white;
+  --mainText-color: white;
   --nav-bg: rgba(230, 240, 255, 0.8);
   --nav-bg-hover: rgba(230, 240, 255, 0.9);
   --nav-shadow: rgba(0, 0, 0, 0.1);
@@ -66,6 +66,20 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background: var(--scroll-thumb);
 }
+
+#castCrew::-webkit-scrollbar {
+  height: 0.5rem;
+}
+
+#castCrew::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+
+#castCrew::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+}
+
+
 
 /* Links and Icons */
 .icons {
@@ -444,6 +458,15 @@ img,
 p,
 ul li {
   animation: fadeIn 1s ease-in-out;
+}
+
+/* ======================================================
+     cast/crew
+====================================================== */
+#castCrew {
+  width: 100%;
+  overflow-x: scroll;
+  display: flex;
 }
 
 /* ======================================================

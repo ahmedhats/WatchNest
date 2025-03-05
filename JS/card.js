@@ -9,10 +9,16 @@ const type = urlParams.get("type");
 const mediaTypes = ["movie", "TRMovie", "favMovie", "tv", "TRTv", "favTv"];
 const personTypes = ["person"];
 
+
 const mediaUrl =
   (type === "movie" || type === "TRMovie" || type === "favMovie")
     ? `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
     : `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}`;
+const castCrewMediaUrl =
+  (type === "movie" || type === "TRMovie" || type === "favMovie")
+    ? `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=credits`
+    : `https://api.themoviedb.org/3/tv/${id}/aggregate_credits?api_key=${apiKey}`;
+
 
 const personUrl = `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}`;
 
@@ -20,6 +26,7 @@ let lastScrollTop = 0;
 const navbar = document.getElementById("nav");
 const cardItem = document.getElementById("card");
 const colorModeBtn = document.getElementById("light");
+const castCrew = document.getElementById("castCrew");
 
 import { applyTheme, toggleTheme } from '../JS/home.js';
 import { getCookie } from '../JS/auth.js';
@@ -86,6 +93,32 @@ function renderMedia() {
       let elements = document.getElementsByClassName("overlay");
       elements[0].style.setProperty('background-color', 'var(--overlay-color)', 'important');
     }
+  });
+  // Fetch and render cast cards
+  fetchData(castCrewMediaUrl).then(media => {
+    castCrew.innerHTML = '';
+    // Check if cast data exists
+    if (media.cast && media.cast.length) {
+      media.cast.forEach(actor => {
+        if (!actor.profile_path) return;
+        if (actor.gender === 2) {
+          const card = document.createElement('div');
+          card.classList.add('castCard');
+          card.innerHTML = `
+        <a href="card.html?id=${actor.id}&type=person">
+        <img src="https://image.tmdb.org/t/p/w185/${actor.profile_path}" alt="${actor.name}" onerror="this.onerror=null; this.src='../IMG/NoImg.jpg';">
+        </a>
+        <div class="actor-info">
+          <h3>${actor.name}</h3>
+        </div>
+      `;
+          castCrew.appendChild(card);
+        }
+      });
+    } else {
+      castCrew.innerHTML = `<p>No cast information available.</p>`;
+    }
+    console.log(media);
   });
 }
 function renderPerson() {
