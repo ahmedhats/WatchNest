@@ -2,6 +2,9 @@ import { getCookie } from '../JS/auth.js';
 const colorModeBtn = document.getElementById("light");
 let lastScrollTop = 0;
 const navbar = document.getElementById("nav");
+
+const searchIcon = document.getElementById("searchIcon");
+const searchInput = document.getElementById("searchInput");
 export function applyTheme(theme) {
     const root = document.documentElement;
     if (theme === 'light') {
@@ -21,28 +24,38 @@ export function toggleTheme() {
     localStorage.setItem('theme', newTheme);
     applyTheme(newTheme);
 }
-if (window.location.pathname.includes('home.html')) {
-    window.addEventListener('load', () => {
-        applyTheme(localStorage.getItem('theme'));
-        if (getCookie('loggedIn') !== 'true') {
-            window.location.href = '../HTML/index.html';// Redirect to home page if cookie found to be looged in :)
-        }
-    });
-    colorModeBtn.addEventListener('click', () => {
-        toggleTheme();
-    });
+function managePage() {
+    if (window.location.pathname.includes('home.html')) {
+        window.addEventListener('load', () => {
+            applyTheme(localStorage.getItem('theme'));
+            if (getCookie('loggedIn') !== 'true') {
+                window.location.href = '../HTML/index.html';// Redirect to home page if cookie found to be looged in :)
+            }
+        });
+        colorModeBtn.addEventListener('click', () => {
+            toggleTheme();
+        });
 
-    window.addEventListener("scroll", function () {
-        let scrollTop = window.scrollY;
+        window.addEventListener("scroll", function () {
+            let scrollTop = window.scrollY;
 
-        if (scrollTop > lastScrollTop) {
-            navbar.style.top = "-100px";
-        } else {
-            navbar.style.top = "0";
-        }
-        lastScrollTop = scrollTop;
-    });
+            if (scrollTop > lastScrollTop) {
+                navbar.style.top = "-100px";
+            } else {
+                navbar.style.top = "0";
+            }
+            lastScrollTop = scrollTop;
+        });
+        searchIcon.addEventListener('click', () => {
+            window.location.href = `../HTML/cards.html?type=all&searchVal=${searchInput.value}`
+        });
+        searchInput.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                window.location.href = `../HTML/cards.html?type=all&searchVal=${searchInput.value}`
+
+            }
+        })
+
+    }
 }
-
-
-// https://api.themoviedb.org/3/search/multi?api_key=YOUR_API_KEY&query=YOUR_QUERY
+managePage();

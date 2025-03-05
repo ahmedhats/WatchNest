@@ -1,11 +1,14 @@
 var currentPage = new Number(1);
 let lastScrollTop = 0;
 const navbar = document.getElementById("nav");
+const cardsList = document.getElementById("cards");
 var sortBy = 'vote_average.desc';
 var filterBy = '';
-var searchQuery = '';
 // popularity.desc  popularity.asc  vote_average.desc  vote_average.asc   original_title.desc   original_title.asc
 
+const urlParams = new URLSearchParams(window.location.search);
+const type = urlParams.get("type");
+const searchVal = urlParams.get("searchVal");
 const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZDUzZTM3YjA0N2EzMGE4ZTk5MDgxNmQ2ODEzYmZhMyIsIm5iZiI6MTczODA2MTU5MC4yNzEwMDAxLCJzdWIiOiI2Nzk4YjcxNjcwMmY0OTJmNDc4ZjdjZDYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.vX3GiU1-gkhCN-Y4HLuF2SnQI-i6Z1WS0uzbG5n814M';
 
 const urls = {
@@ -18,19 +21,17 @@ const urls = {
     TRTvs: `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`,
     favTvs: `https://api.themoviedb.org/3/account/21780644/favorite/tv?language=en-US&page=${currentPage}`,
     persons: `https://api.themoviedb.org/3/person/popular?language=en-US&page=${currentPage}`,
-
-    searchMovies: `https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=${currentPage}&query=${searchQuery}`,
-    searchTV: `https://api.themoviedb.org/3/search/tv?language=en-US&page=${currentPage}&query=${searchQuery}`,
-    searchPersons: `https://api.themoviedb.org/3/search/person?language=en-US&page=${currentPage}&query=${searchQuery}`
+    alls: `https://api.themoviedb.org/3/search/multi?include_adult=false&query=${searchVal}&language=en-US&page=${currentPage}`
+    // searchMovies: `https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=${currentPage}&query=${searchQuery}`,
+    // searchTV: `https://api.themoviedb.org/3/search/tv?language=en-US&page=${currentPage}&query=${searchQuery}`,
+    // searchPersons: `https://api.themoviedb.org/3/search/person?language=en-US&page=${currentPage}&query=${searchQuery}`
     //links for searching the whole database
-
 };
 
 
-const urlParams = new URLSearchParams(window.location.search);
-const type = urlParams.get("type");
 
 const search = document.getElementById("search");
+const searchIcon = document.getElementById("searchIcon");
 const colorModeBtn = document.getElementById("light");
 const LoadMoreBtn = document.getElementById("loadMore");
 
@@ -83,42 +84,55 @@ async function fetchResults(url) {//fetching function to get cards from TMDB API
     }
 }
 function processPageData(type, imgPathName, cardTitileName, dateName, isSearching, isBlured) {
-    const cardsList = document.getElementById("cards");
+    const urlKey = `${type}s`;
     if (!isSearching) {
-        fetchResults(urls[`${type}s`]).then(cards => {
+        fetchResults(urls[urlKey]).then(cards => {
+            console.log(cards);
             if (!cards || cards.length === 0) {
                 console.log(`No ${type} found`);
                 alert(`No ${type} found`)
                 if (allCards.length > 0) {//if user loaded more but there is no more we should render the old cards
-                    renderCards(allCards, isSearching, isBlured);
+                    renderCards(allCards);
                 }
                 return;
             }
-            if (type === 'person') {//if we are in the popular people we only store the men for less storage
+            if (type === 'person' || type === 'all') {//if we are in the popular people or in all we only store the men for less storage
                 cards = cards.filter(card => card.gender !== 1);
             }
             allCards = [...allCards, ...cards];
             console.log(allCards);
-            renderCards(allCards, isSearching, isBlured);
+            renderCards(allCards);
         });
     }
     else {
-        renderCards(allCards, isSearching, isBlured);
+        renderCards(allCards);
     }
 
-    function renderCards(allCards, isSearching, isBlured) {//renders the cards based user searching or not 
+    function renderCards(allCards) {//renders the cards based user searching or not 
         cardsList.innerHTML = "";//clear the DOM each call preventing dublicated data
         allCards.forEach(card => {
             if (isSearching) {
-                if (card[cardTitileName].toLowerCase().includes(searchKeywoard())) {
+                if (type === 'all') {
+                    if (handleMixedSearchPage(card)) {
+                        drawMixedCard(card);
+                    }
+
+                }
+                else if (card[cardTitileName].toLowerCase().includes(searchKeywoard())) {
                     drawCard(card, isBlured);
                 }
             }
             else {
-                drawCard(card, isBlured);
+                if (type === 'all') {
+                    drawMixedCard(card);
+                }
+                else {
+                    drawCard(card, isBlured);
+                }
             }
         });
     }
+
 
     function drawCard(card, isBlured) {//displays each card details based on type of the card
         const carditem = document.createElement('div'); // Create a new card for each object
@@ -148,6 +162,66 @@ function processPageData(type, imgPathName, cardTitileName, dateName, isSearchin
         cardsList.appendChild(carditem);
     }
 }
+
+function handleMixedSearchPage(card) {
+    let title = '';
+    if (card.media_type === "movie") {
+        title = card.title || "";
+    }
+    else {
+        title = card.name || "";
+    }
+    return title.toLowerCase().includes(searchKeywoard())
+}
+
+function drawMixedCard(card) {
+    const carditem = document.createElement('div');
+    carditem.classList.add("card");
+    // Determine link, image URL, title, and extra info based on media type.
+    let linkUrl = `card.html?id=${card.id}&type=${card.media_type}`;
+    let imgUrl = '';
+    let title = '';
+    let extraInfo = '';
+
+    if (card.media_type === "movie") {
+        title = card.title || "";
+        imgUrl = card.poster_path
+            ? `https://image.tmdb.org/t/p/w500/${card.poster_path}`
+            : '../IMG/NoImg.jpg';
+        // Use release date if available
+        extraInfo = card.release_date ? new Date(card.release_date).toDateString() : "";
+        carditem.classList.add("blured");
+    } else if (card.media_type === "tv") {
+        title = card.name || "";
+        imgUrl = card.poster_path
+            ? `https://image.tmdb.org/t/p/w500/${card.poster_path}`
+            : '../IMG/NoImg.jpg';
+        extraInfo = card.first_air_date ? new Date(card.first_air_date).toDateString() : "";
+        carditem.classList.add("blured");
+    } else if (card.media_type === "person") {
+        title = card.name || "";
+        imgUrl = card.profile_path
+            ? `https://image.tmdb.org/t/p/w500/${card.profile_path}`
+            : '../IMG/NoImg.jpg';
+        let popularity = Math.min((card.popularity / 250) * 100, 100);
+        extraInfo = `Dept: ${card.known_for_department || "N/A"} / Popularity: ${popularity.toFixed(1)}%`;
+    }
+
+    let innerHTML = `
+      <a href="${linkUrl}">
+        <img src="${imgUrl}" alt="${title}" onerror="this.onerror=null; this.src='../IMG/NoImg.jpg';">
+      </a>
+      <p>${title}</p>
+    `;
+    if (extraInfo) {
+        innerHTML += `<p class="extraInfo">${extraInfo}</p>`;
+    }
+
+    carditem.innerHTML = innerHTML;
+    cardsList.appendChild(carditem);
+}
+
+
 function managePageState(isLoadingMore = false, isSearching = false, isSorting = false, isFiltering = false) {
     applyTheme(localStorage.getItem('theme'));
     if (isLoadingMore || isSorting || isFiltering) {
@@ -167,6 +241,7 @@ function managePageState(isLoadingMore = false, isSearching = false, isSorting =
         urls.favMovies = `https://api.themoviedb.org/3/account/21780644/favorite/movies?language=en-US&page=${currentPage}`;
         urls.TRMovies = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`;
         urls.TRTvs = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${currentPage}`;
+        urls.alls = `https://api.themoviedb.org/3/search/multi?include_adult=false&query=${searchVal}&language=en-US&page=${currentPage}`;
     }
 
     if (type === "movies") {
@@ -204,6 +279,10 @@ function managePageState(isLoadingMore = false, isSearching = false, isSorting =
         processPageData('person', 'profile_path', 'name', 'known_for_department', isSearching, false);
         noSortFilter()
     }
+    else if (type === "all") {
+        processPageData('all', 'poster_path', 'title', 'release_date', isSearching, true);
+        noSortFilter()
+    }
 }
 function searchKeywoard() {
     const searchItem = document.getElementById("search");
@@ -234,6 +313,10 @@ function renderPage() {
             managePageState(false, true);
         }
     })
+
+    searchIcon.addEventListener('click', () => {
+        managePageState(false, true);
+    });
 
     colorModeBtn.addEventListener("click", () => {
         toggleTheme();
