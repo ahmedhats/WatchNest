@@ -6,10 +6,13 @@
   --accent-color: #ff00ff86;
   --hover-color: #00ffff;
   --bg-color: #010a19;
+  --overlay-color:rgba(0, 0, 0, 0.97);
   --text-color: #fff;
+  --mainText-color:white;
   --nav-bg: rgba(3, 37, 65, 0.8);
   --nav-bg-hover: rgba(3, 37, 65, 0.9);
   --nav-shadow: rgba(3, 37, 65, 0.7);
+  --footer-bg:black;
   --scroll-track: #3498db59;
   --scroll-thumb: #ff00ff86;
 }
@@ -18,11 +21,14 @@
   --primary-color: #3498db;
   --accent-color: #ff66cc;
   --hover-color: #00ffff;
-  --bg-color: #eaf6ff;
+  --bg-color: #d7ebfb;  
+  --overlay-color:rgba(16, 17, 17, 1);
   --text-color: #2c3e50;
+  --mainText-color:white;
   --nav-bg: rgba(230, 240, 255, 0.8);
   --nav-bg-hover: rgba(230, 240, 255, 0.9);
   --nav-shadow: rgba(0, 0, 0, 0.1);
+  --footer-bg: rgb(132, 145, 156);
   --scroll-track: #aed9f0;
   --scroll-thumb: #ff66cc;
 }
@@ -46,17 +52,6 @@ body {
   font-family: Arial, sans-serif;
   overflow-x: hidden;
   position: relative;
-}
-
-body::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  background-color: var(--overlay-bg, rgba(0, 0, 0, 0.5));
-  z-index: -1;
 }
 
 /* Scrollbar */
@@ -246,7 +241,7 @@ ul li:hover::after {
   bottom: -20px;
   right: -20px;
   text-align: center;
-  color: var(--text-color);
+  color: var(--mainText-color);
 }
 
 .circular-progress {
@@ -278,7 +273,7 @@ ul li:hover::after {
 .details {
   flex: 2;
   margin-left: 20px;
-  color: var(--text-color);
+  color: var(--mainText-color);
 }
 
 .details .title {
@@ -317,7 +312,7 @@ ul li:hover::after {
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
   max-width: 900px;
-  margin: 50px auto;
+  margin: 6.5vw auto;
   padding: 2rem;
 }
 
@@ -342,7 +337,7 @@ ul li:hover::after {
 
 .person-info {
   flex: 2;
-  color: var(--text-color);
+  color: var(--mainText-color);
 }
 
 .person-info .title {
@@ -360,6 +355,7 @@ ul li:hover::after {
   list-style: none;
   padding: 0;
   margin-bottom: 1rem;
+  color: var(--hover-color);
 }
 
 .person-details-list li {
@@ -435,12 +431,11 @@ ul li,
   content: "";
   position: absolute;
   width: 100%;
-  height: 100vh;
+  height: 1o0vh;
   top: 0;
   left: 0;
   background-color: var(--overlay-bg, rgba(0, 0, 0, 0.9));
   z-index: 1;
-
 
 }
 
@@ -455,7 +450,7 @@ ul li {
      Footer
 ====================================================== */
 footer {
-  background-color: #000;
+  background-color: var(--footer-bg);
   color: var(--text-color);
   padding: 2rem 0;
   text-align: center;
@@ -480,7 +475,7 @@ footer p {
 }
 
 .social-links a {
-  color: #fff;
+  color: var(--text-color);
   font-size: 1.5rem;
   margin: 0 1rem;
   transition: color 0.3s ease;

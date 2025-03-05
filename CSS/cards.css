@@ -19,8 +19,8 @@
 [data-theme="light"] {
   --primary-color: #3498db;
   --accent-color: #ff66cc;
-  --hover-color: #00ffff;
-  --bg-color: #eaf6ff;
+  --hover-color: #03c7c7;
+  --bg-color: #d7ebfb;
   --text-color: #2c3e50;
   --nav-bg: rgba(230, 240, 255, 0.8);
   --nav-bg-hover: rgba(230, 240, 255, 0.9);

@@ -27,7 +27,7 @@
     --link-hover: #3498db;
     --nav-bg: rgba(230, 240, 255, 0.8);
     --nav-shadow: rgba(3, 37, 65, 0.7);
-    --dropdown-bg: rgba(3, 37, 65, 0.9);
+    --dropdown-bg: rgba(230, 240, 255, 0.9);
     --dropdown-shadow: rgba(3, 37, 65, 0.7);
     --overlay-bg: rgba(0, 0, 0, 0.5);
     --highlight-color: #ffcc00;
@@ -105,13 +105,13 @@ nav {
 }
 
 .dropdown li a {
-    color: var(--body-text);
     display: block;
     padding: 10px;
     text-decoration: none;
 }
 
 .dropdown li a:hover {
+    color: white;
     background: var(--link-hover);
     border-radius: 5px;
 }
