@@ -1,6 +1,6 @@
 
 const apiKey = '2d53e37b047a30a8e990816d6813bfa3';
-
+let x;
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
 const type = urlParams.get("type");
@@ -42,7 +42,6 @@ async function fetchData(url) {
 
 function renderMedia() {
   fetchData(mediaUrl).then(media => {
-    console.log(media);
     // Use movie.title or tv.name basen on valdity 
     const title = media.title || media.name;
     const releaseDate = media.release_date || media.first_air_date || "Unknown";
@@ -98,8 +97,9 @@ function renderMedia() {
   fetchData(castCrewMediaUrl).then(media => {
     castCrew.innerHTML = '';
     // Check if cast data exists
-    if (media.cast && media.cast.length) {
-      media.cast.forEach(actor => {
+    const mediaCast = type.includes('ovie') ? media.credits.cast : media.cast;
+    if (mediaCast && mediaCast.length) {
+      mediaCast.forEach(actor => {
         if (!actor.profile_path) return;
         if (actor.gender === 2) {
           const card = document.createElement('div');
@@ -118,7 +118,6 @@ function renderMedia() {
     } else {
       castCrew.innerHTML = `<p>No cast information available.</p>`;
     }
-    console.log(media);
   });
 }
 function renderPerson() {

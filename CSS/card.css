@@ -20,7 +20,7 @@
 [data-theme="light"] {
   --primary-color: #3498db;
   --accent-color: #ff66cc;
-  --hover-color: #00ffff;
+  --hover-color: #0084ff;
   --bg-color: #d7ebfb;
   --overlay-color: rgba(16, 17, 17, 1);
   --text-color: #2c3e50;
@@ -463,10 +463,55 @@ ul li {
 /* ======================================================
      cast/crew
 ====================================================== */
-#castCrew {
+/* #castCrew {
   width: 100%;
   overflow-x: scroll;
   display: flex;
+}
+
+.castCard{
+  text-align: center;
+  padding: 1vw;
+  border: 1px dashed var(--text-color);
+  border-radius: 4px;
+  box-shadow: -2px -2px 1px 1px black;
+}  */
+#castCrew {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+
+.castCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  min-width: 150px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.castCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--hover-color);
+}
+
+.castCard img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.actor-info h3 {
+  font-size: 1em;
+  margin: 0;
+  color: var(--text-color, #fff);
 }
 
 /* ======================================================
